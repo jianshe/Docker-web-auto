@@ -1,0 +1,50 @@
+<template>
+  <div class="news">
+    <el-row :gutter="20">
+      <el-col :span="7">
+        <ProductType />
+        <div class="mt">
+          <ContractUs />
+        </div>
+      </el-col>
+      <el-col :span="17">
+        <ImgSwiper />
+        <NewsCmp />
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <FooterComponent />
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import ProductType from '@/components/ProductType.vue'
+import ContractUs from '@/components/ContractUs.vue'
+import ImgSwiper from '@/components/ImgSwiper.vue'
+import NewsCmp from '@/components/NewsCmp.vue'
+import FooterComponent from '@/components/FooterComponent.vue'
+export default {
+  name: 'News',
+  components: {
+    ProductType,
+    ContractUs,
+    ImgSwiper,
+    NewsCmp,
+    FooterComponent
+  }
+}
+</script>
+<style lang="scss" scoped>
+.news {
+  margin: 0 auto;
+  text-align: left;
+  width: 1004px;
+  background-color: #fff;
+  .mt {
+    margin-top: 30px;
+  }
+}
+</style>
