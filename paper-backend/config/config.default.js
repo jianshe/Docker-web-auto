@@ -20,9 +20,9 @@ module.exports = appInfo => {
     dialect: "mysql",
     host: "127.0.0.1",
     port: 3306,
-    database: "stuer",
+    database: "paper",
     username: "root",
-    password: "root",
+    password: "stuers",
     timezone: "+8:00"
   };
 
