@@ -33,7 +33,7 @@ services:
       - 60000:80
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d
-      - ./paper-front/dist:/var/www/html/
+      - ./paper-website/dist:/var/www/html/
   # app-pm2:
   #   container_name: app-pm2
   #   #构建容器
