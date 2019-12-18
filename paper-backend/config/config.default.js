@@ -20,9 +20,9 @@ module.exports = appInfo => {
     dialect: "mysql",
     host: "127.0.0.1",
     port: 3306,
-    database: "stuer",
+    database: "paper",
     username: "root",
-    password: "root",
+    password: "my-secret-pw",
     timezone: "+8:00"
   };
 
@@ -62,7 +62,13 @@ module.exports = appInfo => {
   config.urls = {
     stuer_url: "http://127.0.0.1:60000"
   };
-
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 60001,
+      hostname: '0.0.0.0',
+    }
+  };
   config.email = {
     options: {
       host: "smtp.qq.com",
