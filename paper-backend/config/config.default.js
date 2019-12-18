@@ -20,9 +20,9 @@ module.exports = appInfo => {
     dialect: "mysql",
     host: "127.0.0.1",
     port: 3306,
-    database: "paper",
+    database: "stuer",
     username: "root",
-    password: "stuers",
+    password: "root",
     timezone: "+8:00"
   };
 
@@ -48,13 +48,19 @@ module.exports = appInfo => {
       db: 0
     }
   };
-
+  // config.cluster = {
+  //   listen: {
+  //     path: '',
+  //     port: 60000,
+  //     hostname: 'http://127.0.0.1',
+  //   }
+  // };
   config.sso = {
-    domain: "localhost"
+    domain: "http://127.0.0.1"
   };
 
   config.urls = {
-    stuer_url: "http://localhost:7001"
+    stuer_url: "http://127.0.0.1:60000"
   };
 
   config.email = {

@@ -1,32 +1,47 @@
 version: '3.1'
 services:
-  app-pm2:
-      container_name: app-pm2
-      #构建容器
-      build: ./backend
-      #直接从git拉去
-      # build: git@github.com:su37josephxia/docker_ci.git#:backend
-      # 需要链接本地代码时
-      # volumes:
-      #   - ./backend:/usr/src/app
-      ports:
-        - "3000:3000"
-  mongo:
-    image: mongo
+  mysql:
+    container_name: docker_tool_mysql
+    hostname: docker_tool_mysql
+    network_mode: "bridge"
+    environment:
+        MYSQL_ROOT_PASSWORD: "my-secret-pw"
+    image: mysql:5.5
     restart: always
     ports:
-      - 27017:27017
-  mongo-express:
-    image: mongo-express
-    restart: always 
+        - "3306:3306"
+    volumes:
+      - ./mysql/config/my.cnf:/etc/my.cnf
     ports:
-      - 8081:8081
+        - "3306:3306"
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+        - ./redis.conf:/etc/redis/redis.conf:rw
+        - ./redis-data/:/data:rw
+    command:
+      # 执行的命令
+      redis-server /etc/redis/redis.conf --appendonly yes
   nginx:
     restart: always
     image: nginx
     ports:
-      - 8091:80
+      - 60000:80
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d
-      - ./frontend/dist:/var/www/html/
-      - ./static/:/static/
+      - ./paper-front/dist:/var/www/html/
+  # app-pm2:
+  #   container_name: app-pm2
+  #   #构建容器
+  #   build: ./paper-backend
+  #   #直接从git拉去
+  #   # build: git@github.com:su37josephxia/docker_ci.git#:backend
+  #   # 需要链接本地代码时
+  #   # volumes:
+  #   #   - ./paper-backend:/usr/src/app
+  #   ports:
+  #     - "60002:60002"

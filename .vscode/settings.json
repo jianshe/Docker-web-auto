@@ -10,6 +10,9 @@
                 ".git/**",
                 ".vscode/**",
                 "**/node_modules/**",
+                "paper-backend/node_modules/**",
+                "paper-front/node_modules/**",
+                "paper-website/node_modules/**"
             ],
             "deployOnSave": false
         }],
