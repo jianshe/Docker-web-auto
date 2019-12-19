@@ -193,6 +193,7 @@ export default {
     }
   }
   #xw {
+    font-size: 14px;
     p {
       &.xwtit {
         background: url('../assets/xwtit.jpg') no-repeat;
