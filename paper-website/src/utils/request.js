@@ -2,12 +2,12 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  baseURL: 'http://139.196.231.82:60001/prod-api',
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: 'http://139.196.231.82:60001/prod-api',
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
+console.log('process.env.API_ADDRESS', process.env)
 // request interceptor
 service.interceptors.request.use(
   config => {

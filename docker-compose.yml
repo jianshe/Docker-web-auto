@@ -34,6 +34,7 @@ services:
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d
       - ./paper-website/dist:/var/www/html/
+      # - ./paper-front/dist:/var/admin/www/html
   # app-pm2:
   #   container_name: app-pm2
   #   #构建容器

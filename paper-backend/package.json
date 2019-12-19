@@ -31,7 +31,7 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-stuer-server --port=9001",
+    "start": "egg-scripts start --daemon --title=egg-server-stuer-server",
     "stop": "egg-scripts stop --title=egg-server-stuer-server",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
