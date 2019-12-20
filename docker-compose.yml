@@ -6,14 +6,14 @@ services:
     network_mode: "bridge"
     environment:
         MYSQL_ROOT_PASSWORD: "my-secret-pw"
-    image: mysql:5.5
+    image: 'mysql:5.5'
     restart: always
     ports:
         - "3306:3306"
     volumes:
-      - ./mysql/config/my.cnf:/etc/my.cnf
+      - ./mysql/conf.d/mysql.cnf:/etc/mysql/mysql.conf.d/mysql.cnf
     ports:
-        - "3306:3306"
+      - "3306:3306"
   redis:
     image: redis:latest
     container_name: redis
@@ -42,8 +42,6 @@ services:
     volumes:
       - ./nginx_admin/conf.d/:/etc/nginx/conf.d
       - ./paper-front/dist:/var/admin/html/
-      # - ./paper-front/dist:/var/admin/www/html
-      # - ./paper-front/dist:/var/admin/www/html
   # app-pm2:
   #   container_name: app-pm2
   #   #构建容器
