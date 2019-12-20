@@ -26,14 +26,23 @@ services:
     command:
       # 执行的命令
       redis-server /etc/redis/redis.conf --appendonly yes
-  nginx:
+  nginx_website:
     restart: always
     image: nginx
     ports:
       - 60000:80
     volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./nginx_website/conf.d/:/etc/nginx/conf.d
       - ./paper-website/dist:/var/www/html/
+  nginx_admin:
+    restart: always
+    image: nginx
+    ports:
+      - 60003:80
+    volumes:
+      - ./nginx_admin/conf.d/:/etc/nginx/conf.d
+      - ./paper-front/dist:/var/admin/html/
+      # - ./paper-front/dist:/var/admin/www/html
       # - ./paper-front/dist:/var/admin/www/html
   # app-pm2:
   #   container_name: app-pm2
