@@ -217,6 +217,7 @@ export default {
             files: this.uploadForm.uploadFiles,
             userId: this.userId
           }
+          params.files = this.dealDiffEnvUrlPre(params.files)
           createEngineerCase(params).then(res => {
             if (res.code === 0) {
               this.$refs[formName].resetFields()
@@ -276,6 +277,17 @@ export default {
           success: false
         })
       }
+    },
+    dealDiffEnvUrlPre(files) {
+      if (this.uploadUrl !== '/dev-api') {
+        if (files && files.length > 0) {
+          files.forEach(item => {
+            const name = item.name
+            item.name = 'http://139.196.231.82:60001/upload/postImg/' + name.substring(name.lastIndexOf('/') + 1)
+          })
+        }
+      }
+      return files
     },
     UploadUrl() {
       return this.uploadUrl + '/uploadImgsForPost'

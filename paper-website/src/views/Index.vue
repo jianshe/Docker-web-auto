@@ -52,31 +52,20 @@
             </router-link>
           </span>
         </p>
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tbody>
-            <tr>
-              <td v-for="(item,index) in productsList" :key="index" style="text-align:center;">
-                <div class="image">
-                  <router-link :to="{ name: 'products', params: { type: item.id } }">
-                    <img
-                      :src="item.url"
-                      border="0"
-                      height="156"
-                      class="pic"
-                      :alt="item.title"
-                      align="absmiddle"
-                    >
-                  </router-link>
-                </div>
-                <div class="t">
-                  <router-link
-                    :to="{ name: 'products', params: { type: item.id } }"
-                  >{{ item.title }}</router-link>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="products-list">
+          <ul>
+            <li v-for="(item,index) in productsList" :key="index">
+              <div class="cover-wp">
+                <a href="javascript:;">
+                  <img class="cover" :src="item.url">
+                </a>
+              </div>
+              <div class="info">
+                <p>{{ item.title }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </el-col>
     </el-row>
     <el-row>
@@ -175,7 +164,7 @@ export default {
     }
   }
   .gsjj {
-    font-size: 14px;
+    font-size: 13px;
     p {
       &.gstit {
         background: url('../assets/gstit.jpg') no-repeat;
@@ -193,7 +182,7 @@ export default {
     }
   }
   #xw {
-    font-size: 14px;
+    font-size: 13px;
     p {
       &.xwtit {
         background: url('../assets/xwtit.jpg') no-repeat;
@@ -206,6 +195,7 @@ export default {
         margin-right: 10px;
         padding: 5px 2px;
         list-style-type: none;
+        line-height: 16px;
         border-bottom: 1px dashed #8b3a28;
         a {
           margin-left: 10px;
@@ -238,6 +228,27 @@ export default {
       margin-right: 30px;
       margin-top: 20px;
       font-size: 14px;
+    }
+  }
+  .products-list {
+    margin-left: 30px;
+    li {
+      position: relative;
+      margin: 0 20px 20px 0;
+      width: 220px;
+      background: #fff;
+      list-style-type: none;
+      float: left;
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.06);
+      .cover {
+        padding: 5px;
+        width: 216px;
+        height: 160px;
+      }
+      .info {
+        text-align: center;
+        margin-bottom: 8px;
+      }
     }
   }
 }

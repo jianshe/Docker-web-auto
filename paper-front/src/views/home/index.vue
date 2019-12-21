@@ -321,6 +321,7 @@ export default {
       this.getProductTypes()
     },
     addProductsOp(formName) {
+      debugger
       this.$refs[formName].validate(valid => {
         if (valid) {
           const params = {
@@ -328,6 +329,7 @@ export default {
             files: this.uploadForm.uploadFiles,
             userId: this.userId
           }
+          params.files = this.dealDiffEnvUrlPre(params.files)
           createProduct(params).then(res => {
             if (res.code === 0) {
               this.$refs[formName].resetFields()
@@ -341,6 +343,17 @@ export default {
           })
         }
       })
+    },
+    dealDiffEnvUrlPre(files) {
+      if (this.uploadUrl !== '/dev-api') {
+        if (files && files.length > 0) {
+          files.forEach(item => {
+            const name = item.name
+            item.name = 'http://139.196.231.82:60001/upload/postImg/' + name.substring(name.lastIndexOf('/') + 1)
+          })
+        }
+      }
+      return files
     },
     showBigImgFun(products) {
       this.showBigImg = true

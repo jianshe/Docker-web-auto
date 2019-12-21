@@ -54,6 +54,7 @@ export default {
       height: 43px;
     }
     dl {
+     min-height: 300px;
       dt {
         border-bottom: 1px solid #456b00;
         a {

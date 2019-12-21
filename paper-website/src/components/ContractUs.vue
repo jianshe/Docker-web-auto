@@ -20,10 +20,11 @@ export default {
 <style lang="scss">
 .contractus {
   .contract-con {
-      font-size: 14px;
+    font-size: 12px;
     text-align: left;
     width: 100%;
     background: url('../assets/lxbg.jpg') no-repeat;
+    background-size: 100% 100%;
     p {
       &.lxtit {
         background: url('../assets/lxtit.jpg') no-repeat;

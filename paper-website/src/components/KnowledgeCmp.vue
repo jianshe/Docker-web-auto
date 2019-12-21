@@ -108,7 +108,7 @@ export default {
 .knowledge-con {
   h1 {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 10px;
     margin-top: 10px;
     text-align: center;

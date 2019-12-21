@@ -42,7 +42,7 @@
 
 <script>
 import { getLatestProducts } from '@/api/product'
-import { getProductTypeById } from '@/api/productType'
+import { getProductTypeById, getTotalTypeList } from '@/api/productType'
 export default {
   name: 'ProductsCmp',
   props: {
@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       page: 1,
+      typeId: -1,
       type: '',
       desc: '',
       limit: 6,
@@ -66,7 +67,6 @@ export default {
     productTypeId(val) {
       if (val !== this.oldProductTypeId) {
         this.getProductTypeById()
-        this.getProductsList()
       }
     }
   },
@@ -87,14 +87,39 @@ export default {
             this.type = data.type
             this.desc = data.desc
           }
+          this.getProductsList()
+        } else {
+          // 产品类型不存在，查找最近一条的产品类型
+          this.getProductTypeList()
         }
       })
     },
-    getProductsList() {
+    getProductTypeList() {
+      const params = {
+        page: 1,
+        limit: 6
+      }
+      getTotalTypeList(params).then(res => {
+        if (res.code === 0) {
+          const data = res.data
+          const productTypes = data.productTypes
+          if (productTypes.length > 0) {
+            this.typeId = productTypes[0].id
+            this.type = productTypes[0].type
+            this.desc = productTypes[0].desc
+            this.getProductsList(this.typeId)
+          }
+        }
+      })
+    },
+    getProductsList(typeId) {
       const params = {
         page: this.page,
         limit: this.limit,
         productTypeId: this.productTypeId
+      }
+      if (typeId) {
+        params.productTypeId = this.typeId
       }
       getLatestProducts(params).then(res => {
         if (res.code === 0) {

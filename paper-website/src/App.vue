@@ -15,7 +15,7 @@
             <router-link to="/intro">公司简介</router-link>
           </li>
           <li>
-            <router-link to="/products?id=1">产品中心</router-link>
+            <router-link to="/products">产品中心</router-link>
           </li>
           <li>
             <router-link to="/engineerCase">工程案例</router-link>

@@ -7,6 +7,7 @@
       <el-col :span="17">
         <ImgSwiper />
         <div class="company-detail">
+          <p class="title">河南鑫欣纸业有限责任公司</p>
           <div id="zi_gsjj">
             <p
               class="gsnr"
@@ -46,7 +47,15 @@ export default {
   width: 1004px;
   background-color: #fff;
   .company-detail {
-    font-size: 14px;
+    margin-bottom: 30px;
+    .title {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 16px;
+      text-align: center;
+    }
+    font-size: 13px;
     text-align: left;
     .gsnr {
       margin: 10px;

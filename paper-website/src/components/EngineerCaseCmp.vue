@@ -4,31 +4,21 @@
     <center class="title">
       <h1>工程案例</h1>
     </center>
-    <div class="cpcon">
-      <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tbody>
-          <tr>
-            <td v-for="(item, index) in engineerCaseList" :key="index">
-              <div class="image">
-                <img
-                  :src="item.url"
-                  border="0"
-                  width="214"
-                  height="156"
-                  class="pic"
-                  :alt="item.title"
-                  align="absmiddle"
-                >
-              </div>
-              <div class="t">
-                <span>{{ item.title }}</span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="case-list">
+      <ul>
+        <li v-for="(item,index) in engineerCaseList" :key="index">
+          <div class="cover-wp">
+            <a href="javascript:;">
+              <img class="cover" :src="item.url">
+            </a>
+          </div>
+          <div class="info">
+            <p>{{ item.title }}</p>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="products-page-con">
+    <div class="engineer-page-con">
       <el-pagination
         :current-page="page"
         :page-sizes="[6, 12, 18, 24]"
@@ -94,19 +84,35 @@ export default {
   }
   .title {
     margin-bottom: 10px;
-    font-weight: 800;
+    font-weight: 500;
     font-size: 20px;
   }
-  .cpcon {
-    td {
+  .case-list {
+    li {
+      position: relative;
+      margin: 0 20px 20px 0;
+      width: 210px;
+      background: #fff;
+      list-style-type: none;
       display: inline-block;
-      width: 33%;
-      margin-bottom: 16px;
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.06);
+      .cover {
+        padding: 5px;
+        width: 216px;
+        height: 160px;
+      }
+      .info {
+        text-align: center;
+        margin-bottom: 8px;
+      }
     }
   }
   .t {
     text-align: center;
     font-size: 14px;
+  }
+  .engineer-page-con {
+    margin-right: 50px;
   }
 }
 </style>
