@@ -16,13 +16,24 @@ module.exports = appInfo => {
   // 登录token的有效期,设置为一周
   config.loginTokenTime = 7 * 24 * 60 * 60;
 
+  // prod setting
+  // config.sequelize = {
+  //   dialect: "mysql",
+  //   host: "127.0.0.1",
+  //   port: 3306,
+  //   database: "paper",
+  //   username: "root",
+  //   password: "my-secret-pw",
+  //   timezone: "+8:00"
+  // };
+  // dev setting
   config.sequelize = {
     dialect: "mysql",
     host: "127.0.0.1",
     port: 3306,
-    database: "paper",
+    database: "stuer",
     username: "root",
-    password: "my-secret-pw",
+    password: "root",
     timezone: "+8:00"
   };
 
@@ -58,17 +69,21 @@ module.exports = appInfo => {
   config.sso = {
     domain: "http://127.0.0.1"
   };
-
+  // dev setting
   config.urls = {
-    stuer_url: "http://127.0.0.1:60000"
+    stuer_url: "http://127.0.0.1:7001"
   };
-  config.cluster = {
-    listen: {
-      path: '',
-      port: 60001,
-      hostname: '0.0.0.0',
-    }
-  };
+  // prod setting
+  // config.urls = {
+  //   stuer_url: "http://127.0.0.1:60000"
+  // };
+  // config.cluster = {
+  //   listen: {
+  //     path: '',
+  //     port: 60001,
+  //     hostname: '0.0.0.0',
+  //   }
+  // };
   config.email = {
     options: {
       host: "smtp.qq.com",
