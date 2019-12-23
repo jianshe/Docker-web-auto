@@ -85,7 +85,7 @@ export default {
   .title {
     margin-bottom: 10px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
   }
   .case-list {
     li {
@@ -104,6 +104,7 @@ export default {
       .info {
         text-align: center;
         margin-bottom: 8px;
+        font-size: 14px;
       }
     }
   }

@@ -4,13 +4,16 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <img src="../assets/1.jpg" />
+            <img src="../assets/1.jpg">
           </div>
           <div class="swiper-slide">
-            <img src="../assets/2.jpg" />
+            <img src="../assets/2.jpg">
           </div>
           <div class="swiper-slide">
-            <img src="../assets/3.jpg" />
+            <img src="../assets/3.jpg">
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/4.png">
           </div>
         </div>
       </div>

@@ -79,7 +79,7 @@ export default {
       h1 {
         text-align: center;
         font-weight: 800;
-        font-size: 18px;
+        font-size: 16px;
         margin-bottom: 10px;
       }
       .sub-title {

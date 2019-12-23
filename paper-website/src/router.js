@@ -8,6 +8,7 @@ import News from './views/News'
 import NewDetail from './views/NewDetail'
 import Knowledge from './views/Knowledge'
 import KnowledgeInfo from './views/KnowledgeInfo'
+import Contract from './views/Contract'
 Vue.use(Router)
 
 export default new Router({
@@ -88,6 +89,15 @@ export default new Router({
       meta: {
         // 页面标题title
         title: '新闻动态详情页'
+      }
+    },
+    {
+      path: '/contract',
+      name: 'contract',
+      component: Contract,
+      meta: {
+        // 页面标题title
+        title: '联系我们'
       }
     }
   ]

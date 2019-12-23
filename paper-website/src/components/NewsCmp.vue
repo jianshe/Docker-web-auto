@@ -107,7 +107,7 @@ export default {
 <style lang="scss">
 .company-news-con {
   center h1 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     margin-bottom: 10px;
     margin-top: 10px;

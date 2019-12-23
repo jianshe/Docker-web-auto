@@ -3,6 +3,9 @@
     <div id="header-bg">
       <div id="head">
         <div class="title">河南鑫欣纸业有限责任公司</div>
+        <div class="tel">
+          <p>联系我们：0376-5891686</p>
+        </div>
       </div>
     </div>
     <div id="nav-bg">
@@ -25,6 +28,9 @@
           </li>
           <li>
             <router-link to="/knowledge">行业知识</router-link>
+          </li>
+          <li>
+            <router-link to="/contract">联系我们</router-link>
           </li>
           <div class="clear" />
         </ul>
@@ -57,11 +63,27 @@ export default {
       margin: 0 auto;
       width: 100%;
       .title {
+        color: #111;
+        letter-spacing: 0;
+        text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777,
+          0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333,
+          0px 8px 7px #001135;
+
+        text-shadow: #f3f3f3 1px 1px 0px, #b2b2b2 1px 2px 0;
         text-align: left;
-        font-size: 24px;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        font-size: 36px;
+        padding-top: 30px;
+        font-weight: bold;
+        letter-spacing: 8px;
+        padding-bottom: 30px;
         margin-left: 290px;
+      }
+      .tel {
+        position: absolute;
+        top: 40px;
+        right: 150px;
+        color: #444;
+        font-size: 14px;
       }
     }
   }

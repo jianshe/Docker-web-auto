@@ -107,7 +107,7 @@ export default {
 <style lang="scss">
 .knowledge-con {
   h1 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin-bottom: 10px;
     margin-top: 10px;

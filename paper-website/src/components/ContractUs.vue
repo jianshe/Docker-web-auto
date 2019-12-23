@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'Contract'
+  name: 'ContractUs'
 }
 </script>
 
