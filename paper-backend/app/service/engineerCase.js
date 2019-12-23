@@ -13,7 +13,7 @@ class EngineerCase extends Service {
   async getEngineerCase(limit = 10, offset = 0,userId) {
     const { ctx } = this;
     const query = {
-      order: [["updatedAt", "DESC"]],
+      order: [["createdAt", "DESC"]],
       limit,
       offset
     };

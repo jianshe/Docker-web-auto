@@ -13,7 +13,7 @@ class Knowledge extends Service {
   async getKnowledges(limit = 10, offset = 0, title = "") {
     const { ctx } = this;
     const query = {
-      order: [["updatedAt", "DESC"]],
+      order: [["createdAt", "DESC"]],
       limit,
       offset
     };
