@@ -30,7 +30,7 @@ services:
     restart: always
     image: nginx
     ports:
-      - 60000:80
+      - 80:80
     volumes:
       - ./nginx_website/conf.d/:/etc/nginx/conf.d
       - ./paper-website/dist:/var/www/html/
