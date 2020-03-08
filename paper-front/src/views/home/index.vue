@@ -321,7 +321,6 @@ export default {
       this.getProductTypes()
     },
     addProductsOp(formName) {
-      debugger
       this.$refs[formName].validate(valid => {
         if (valid) {
           const params = {
@@ -613,7 +612,7 @@ export default {
       line-height: 50px;
       right: 0;
       bottom: 60px;
-      color: #fff;
+      color: #111;
     }
     .showIcon {
       .delete-icon {

@@ -16,13 +16,11 @@
       <el-row :gutter="20">
         <el-col v-for="(item, index) in engineerCaseInfo" :key="index" :span="6">
           <el-card>
-            <div :class="[showDeleteIcon?'showIcon':'hideIcon','image-info']">
+            <div :class="[showDeleteIcon?'showIcon':'hideIcon','image-info']" @mouseover="showDeleteIconOp(index)" @mouseout="showDeleteIcon=false">
               <img
                 :src="item.url"
                 class="image"
-                @mouseover="showDeleteIconOp(index)"
-                @mouseout="showDeleteIcon=false"
-              >
+              />
               <span
                 v-if="index === nowChooseImgIndex"
                 class="delete-icon"
@@ -283,7 +281,9 @@ export default {
         if (files && files.length > 0) {
           files.forEach(item => {
             const name = item.name
-            item.name = 'http://139.196.231.82:60001/upload/postImg/' + name.substring(name.lastIndexOf('/') + 1)
+            item.name =
+              'http://139.196.231.82:60001/upload/postImg/' +
+              name.substring(name.lastIndexOf('/') + 1)
           })
         }
       }
@@ -374,10 +374,10 @@ export default {
       position: absolute;
       z-index: 999999999;
       line-height: 50px;
-      right: 3px;
-      bottom: 27px;
+      right: 8px;
+      bottom: -7px;
       display: none;
-      color: #fff;
+      color: #6a5555;
     }
     .showIcon {
       .delete-icon {
