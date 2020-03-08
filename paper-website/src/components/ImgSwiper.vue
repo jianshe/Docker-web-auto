@@ -13,9 +13,20 @@
             <img src="../assets/3.jpg">
           </div>
           <div class="swiper-slide">
-            <img src="../assets/4.png">
+            <img src="../assets/4.jpg">
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/5.jpg">
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/6.jpg">
           </div>
         </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination" />
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev" />
+        <div class="swiper-button-next" />
       </div>
     </div>
   </div>
@@ -28,10 +39,19 @@ export default {
   mounted() {
     new Swiper('.swiper-container', {
       effect: 'fade',
-      autoplay: true,
+      autoplay: {
+        disableOnInteraction: false
+      },
       loop: true,
       // 如果需要分页器
-      pagination: '.swiper-pagination',
+      pagination: {
+        el: '.swiper-pagination'
+      },
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
       // 如果需要前进后退按钮
       nextButton: '.swiper-button-next',
       prevButton: '.swiper-button-prev',
@@ -51,41 +71,27 @@ export default {
     padding: 0px;
     width: 100%;
     height: 333px;
-    .slides {
-      margin: 0px auto;
-      width: 100%;
-      height: 333px;
-      overflow: hidden;
-      position: relative;
-      .slide-li {
-        margin: 0px;
-        padding: 0px;
-        left: 0px;
-        bottom: 0px;
-        position: absolute;
+    .swiper-container {
+      .swiper-button-next:after,
+      .swiper-button-prev:after {
+        color: #999;
+        font-size: 30px;
       }
-      .slide-pic {
-        margin: 0px;
-        padding: 0px;
-        width: 100%;
-        overflow: hidden;
-        list-style: none;
+      &:hover {
+        .swiper-button-prev,
+        .swiper-button-next {
+          display: inline-block;
+        }
+      }
+      .swiper-wrapper {
         img {
           width: 100%;
-          height: 333px;
-        }
-        li {
-          display: none;
-          .cur {
-            display: block;
-          }
+          height: 330px;
         }
       }
-    }
-    .swiper-wrapper {
-      img {
-        width: 100%;
-        height: 330px;
+      .swiper-button-prev,
+      .swiper-button-next {
+        display: none;
       }
     }
   }

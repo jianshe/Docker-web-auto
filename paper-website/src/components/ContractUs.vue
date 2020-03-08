@@ -5,7 +5,7 @@
       <p class="lxnr">公司名称: 河南鑫欣纸业有限责任公司</p>
       <p class="lxnr">联系人: 李涛</p>
       <p class="lxnr">电话: 0376-5891686</p>
-      <p class="lxnr">手机 139-037-603-89</p>
+      <p class="lxnr">手机 139-0376-0389</p>
       <p class="lxnr">地址：河南省息县化肥厂北门曹园新村对面</p>
     </div>
   </div>

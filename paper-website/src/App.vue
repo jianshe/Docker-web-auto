@@ -2,7 +2,7 @@
   <div id="app">
     <div id="header-bg">
       <div id="head">
-        <div class="title">河南鑫欣纸业有限责任公司</div>
+        <p class="title">河南鑫欣纸业有限责任公司</p>
         <div class="tel">
           <p>联系我们：0376-5891686</p>
         </div>
@@ -77,6 +77,7 @@ export default {
         letter-spacing: 8px;
         padding-bottom: 30px;
         margin-left: 290px;
+        white-space: nowrap;
       }
       .tel {
         position: absolute;

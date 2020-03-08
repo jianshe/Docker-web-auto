@@ -12,9 +12,9 @@
               <img class="cover" :src="item.url">
             </a>
           </div>
-          <div class="info">
+          <!-- <div class="info">
             <p>{{ item.title }}</p>
-          </div>
+          </div> -->
         </li>
       </ul>
     </div>
