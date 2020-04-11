@@ -92,9 +92,7 @@ export default {
           text-indent: 2em;
           padding: 0 10px;
           text-align: left;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
+          white-space: pre-wrap;
         }
         &.lxnr {
           line-height: 24px;

@@ -13,7 +13,7 @@
               日期：{{ engineerCaseDetal.showTime }}
               <span>&nbsp;&nbsp;来源:本站原创</span>&nbsp;&nbsp;
             </div>
-            <img class="img-cls" :src= "engineerCaseDetal.url" alt="">
+            <img class="img-cls" :src="engineerCaseDetal.url" alt="">
             <p class="gsnr">{{ engineerCaseDetal.content }}</p>
           </div>
         </div>
@@ -103,9 +103,7 @@ export default {
           text-indent: 2em;
           padding: 0 10px;
           text-align: left;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
+          white-space: pre-wrap;
         }
         &.lxnr {
           line-height: 24px;

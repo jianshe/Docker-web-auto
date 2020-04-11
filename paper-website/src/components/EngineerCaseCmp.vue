@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     goDetail(id) {
-      this.$router.push({path: '/engineerCase/' + id})
+      this.$router.push({ path: '/engineerCase/' + id })
     },
     getEngineerCaseList() {
       const params = {

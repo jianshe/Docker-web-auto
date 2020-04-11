@@ -48,7 +48,7 @@
           <div class="products-list">
             <ul>
               <li v-for="(item,index) in products" :key="index">
-                <div class="img-detail" @click="goProductDetail(item.id)" style="cursor:pointer">
+                <div class="img-detail" style="cursor:pointer" @click="goProductDetail(item.id)">
                   <img class="cover" :src="item.url">
                   <div class="info">
                     <p>{{ item.title }}</p>

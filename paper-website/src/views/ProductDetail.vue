@@ -13,7 +13,7 @@
               日期：{{ productDetail.showTime }}
               <span>&nbsp;&nbsp;来源:本站原创</span>&nbsp;&nbsp;
             </div>
-            <img class="img-cls" :src= "productDetail.url" alt="">
+            <img class="img-cls" :src="productDetail.url" alt="">
             <p class="gsnr">{{ productDetail.content }}</p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default {
       return data
     },
     formateContent(content) {
-      return content.replace(/\s*/g,'')
+      return content.replace(/\s*/g, '')
     }
   }
 }
@@ -103,7 +103,7 @@ export default {
           text-indent: 2em;
           padding: 0 10px;
           text-align: left;
-          white-space:pre-wrap;
+          white-space: pre-wrap;
         }
         &.lxnr {
           line-height: 24px;
