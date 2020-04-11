@@ -33,13 +33,17 @@ module.exports = app => {
   // 产品相关
   router.get("/api/products/getLatestProducts", "api.products.index"); // 获取最新产品
   router.get("/api/products/list", "api.products.getTotalProductList"); // 获取所有产品
+  router.get("/api/products/getProductList","api.products.getProductList"); // 获取产品列表
   router.post("/api/products/create", "api.products.create"); // 获取最新产品
   router.get("/api/products/delete", "api.products.destroy"); // 删除某一产品
-
+  router.get("/api/products/findById", "api.products.findById"); // 通过id产品
+  router.post("/api/products/update", "api.products.updateProduct"); // 更新产品
   // 工程案例相关
   router.get("/api/engineerCase/list", "api.engineerCase.index"); // 获取最新工程案例
   router.post("/api/engineerCase/create", "api.engineerCase.create"); // 添加工程案例
   router.get("/api/engineerCase/delete", "api.engineerCase.destroy"); // 删除工程案例
+  router.get("/api/engineerCase/findById", "api.engineerCase.findById"); // 通过id查找工程案例
+  router.post("/api/engineerCase/update", "api.engineerCase.updateEngineer"); // 更新工程案例
 
   // 行业知识相关
   router.get("/api/knowledge/list", "api.knowledge.index");

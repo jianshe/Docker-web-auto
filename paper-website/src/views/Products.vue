@@ -48,9 +48,11 @@
           <div class="products-list">
             <ul>
               <li v-for="(item,index) in products" :key="index">
-                <img class="cover" :src="item.url">
-                <div class="info">
-                  <p>{{ item.title }}</p>
+                <div class="img-detail" @click="goProductDetail(item.id)" style="cursor:pointer">
+                  <img class="cover" :src="item.url">
+                  <div class="info">
+                    <p>{{ item.title }}</p>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -108,6 +110,11 @@ export default {
     this.getProductTypeList()
   },
   methods: {
+    goProductDetail(id) {
+      this.$router.push({
+        path: '/products/' + id
+      })
+    },
     getProductsList() {
       const params = {
         page: this.page,

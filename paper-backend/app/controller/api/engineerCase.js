@@ -47,6 +47,42 @@ class EngineerCase extends Controller {
     const result = await ctx.service.engineerCase.create(ctx.request.body);
     ctx.helper.$success(result);
   }
+  // 通过工程案例id查找工程案例相关信息
+  async findById() {
+    const { ctx } = this;
+    const id = ctx.helper.toInt(ctx.query.id);
+    const engineerCase = await ctx.service.engineerCase.findById(id);
+    if (!engineerCase) {
+      const { ENGINEERCASE_NOT_FOUND } = this.config.errors;
+      ctx.helper.$fail(ENGINEERCASE_NOT_FOUND.code, ENGINEERCASE_NOT_FOUND.msg);
+      return;
+    }
+    ctx.helper.$success(engineerCase);
+  }
+   // 更新工程案例
+  async updateEngineer() {
+    const { ctx } = this;
+    ctx.validate(
+      {
+        userId: {
+          type: "int",
+          convertType: "int",
+          default: 0,
+          required: true
+        }
+      },
+      ctx.request.body
+    );
+    const id = ctx.helper.toInt(ctx.request.body.id);
+    const engineerCase = await ctx.service.engineerCase.findById(id);
+    if (!engineerCase) {
+      const { ENGINEERCASE_NOT_FOUND } = this.config.errors;
+      ctx.helper.$fail(ENGINEERCASE_NOT_FOUND.code, ENGINEERCASE_NOT_FOUND.msg);
+      return;
+    }
+    await engineerCase.update(ctx.request.body);
+    ctx.helper.$success(engineerCase);
+  }
   // 删除工程案例
   async destroy() {
     const { ctx } = this;

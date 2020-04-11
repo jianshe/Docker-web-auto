@@ -68,13 +68,13 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/producttype',
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        path: 'producttype',
+        component: () => import('@/views/product-type/index'),
         name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
+        meta: { title: '首页', icon: 'list', affix: true }
       }
     ]
   }
@@ -85,24 +85,6 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   /** when your routing map is too long, you can split it into small modules **/
-  {
-    path: '/producttype',
-    component: Layout,
-    name: 'Producttype',
-    redirect: '/product-type/index',
-    meta: {
-      title: '产品类型',
-      icon: 'type'
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/product-type/index'),
-        name: 'Product-index',
-        meta: { title: '产品类型' }
-      }
-    ]
-  },
   {
     path: '/home',
     component: Layout,

@@ -55,7 +55,7 @@
         <div class="products-list">
           <ul>
             <li v-for="(item,index) in productsList" :key="index">
-              <div class="cover-wp">
+              <div class="cover-wp" @click="goProductDetail(item.id)">
                 <a href="javascript:;">
                   <img class="cover" :src="item.url">
                 </a>
@@ -113,6 +113,9 @@ export default {
           }
         }
       })
+    },
+    goProductDetail(id) {
+      this.$router.push({ path: '/products/' + id })
     },
     getProductList() {
       fetchList(this.queryParam).then(res => {
@@ -178,6 +181,9 @@ export default {
         text-indent: 2em;
         padding: 0 10px;
         color: #888773;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }

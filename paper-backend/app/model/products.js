@@ -10,6 +10,7 @@ module.exports = app => {
       productTypeId: { type: INTEGER, comment: '产品类型id' },
       userId: { type: INTEGER, comment: "用户id" },
       title: { type: STRING, comment: '产品标题' },
+      content: { type: TEXT, comment: '产品描述' },
       url: { type: TEXT, comment: '产品服务器下载地址' },
       createdAt: {
         type: DATE,

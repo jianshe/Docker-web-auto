@@ -60,6 +60,9 @@ export default {
     .gsnr {
       margin: 10px;
       text-indent: 2em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

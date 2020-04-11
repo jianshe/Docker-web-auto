@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/products/list',
+    url: '/products/getProductList',
     method: 'get',
     params: query
   })
@@ -21,5 +21,21 @@ export function deleteProduct(params) {
     url: '/products/delete',
     method: 'get',
     params: params
+  })
+}
+
+export function findById(params) {
+  return request({
+    url: '/products/findById',
+    method: 'get',
+    params: params
+  })
+}
+
+export function updateProduct(data) {
+  return request({
+    url: '/products/update',
+    method: 'post',
+    data
   })
 }

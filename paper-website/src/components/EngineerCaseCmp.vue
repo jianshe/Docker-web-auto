@@ -7,7 +7,7 @@
     <div class="case-list">
       <ul>
         <li v-for="(item,index) in engineerCaseList" :key="index">
-          <div class="cover-wp">
+          <div class="cover-wp" @click="goDetail(item.id)">
             <a href="javascript:;">
               <img class="cover" :src="item.url">
             </a>
@@ -48,6 +48,9 @@ export default {
     this.getEngineerCaseList()
   },
   methods: {
+    goDetail(id) {
+      this.$router.push({path: '/engineerCase/' + id})
+    },
     getEngineerCaseList() {
       const params = {
         page: this.page,

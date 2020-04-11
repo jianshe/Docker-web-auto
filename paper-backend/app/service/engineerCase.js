@@ -35,7 +35,7 @@ class EngineerCase extends Service {
       const fileSavePromise = files.map(async (file) => {
         engineerCaseModel.title = file.value;
         engineerCaseModel.url = file.name;
-        await await ctx.model.EngineerCase.create(engineerCaseModel);
+        await ctx.model.EngineerCase.create(engineerCaseModel);
         await Promise.all(fileSavePromise);
       });
     }

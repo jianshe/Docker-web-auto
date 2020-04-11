@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function getLatestProducts(query) {
   return request({
-    url: '/products/getLatestProducts',
+    url: '/products/getProductList',
     method: 'get',
     params: query
   })
@@ -30,3 +30,11 @@ export function deleteProduct(params) {
     params: params
   })
 }
+export function getProductDetail(params) {
+  return request({
+    url: '/products/findById',
+    method: 'get',
+    params: params
+  })
+}
+

@@ -23,3 +23,10 @@ export function deleteEngineerCase(params) {
     params: params
   })
 }
+export function getEngineerCaseDetail(params) {
+  return request({
+    url: '/engineerCase/findById',
+    method: 'get',
+    params: params
+  })
+}

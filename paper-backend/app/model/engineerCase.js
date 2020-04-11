@@ -9,6 +9,7 @@ module.exports = app => {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       userId: { type: INTEGER, comment: "用户id" },
       title: { type: STRING, comment: '产品标题' },
+      content: { type: TEXT, comment: '工程案例内容'},
       url: { type: TEXT, comment: '产品服务器下载地址' },
       createdAt: {
         type: DATE,

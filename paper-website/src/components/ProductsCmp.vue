@@ -7,7 +7,7 @@
         <tbody>
           <tr>
             <td v-for="(item, index) in products" :key="index">
-              <div class="image">
+              <div class="image" @click="goProductDetail(item.id)">
                 <img
                   :src="item.url"
                   border="0"
@@ -76,6 +76,11 @@ export default {
     this.oldProductTypeId = this.productTypeId
   },
   methods: {
+    goProductDetail(id) {
+      this.$router.push({
+        path: '/products/' + id
+      })
+    },
     getProductTypeById() {
       const params = {
         id: this.productTypeId

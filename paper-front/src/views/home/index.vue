@@ -2,39 +2,98 @@
   <div class="home">
     <div class="add-product">
       <div class="title">
-        <h1>产品种类展示</h1>
+        <h1>产品列表展示</h1>
       </div>
-      <button
-        type="button"
-        class="el-button el-button--primary el-button--small"
-        @click="addProduct"
+      <el-select v-model="filterType" placeholder="请选择产品类型">
+        <el-option
+          v-for="item in productOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+      <el-button
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="handleFilter"
+        >搜索</el-button
       >
-        <span>添加产品</span>
-      </button>
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-edit"
+        @click="addProduct"
+        >添加产品</el-button
+      >
     </div>
     <div class="product-show">
-      <el-row :gutter="20">
-        <el-col v-for="(item, index) in productsInfo" :key="index" :span="6">
-          <el-card>
-            <div class="image-info">
-              <img
-                v-if="item.firstUrl"
-                :src="item.firstUrl"
-                class="image"
-                @click="showBigImgFun(item.products)"
-              >
-              <img v-else src="../../assets/default.jpg" class="image">
-              <div class="sub-title">
-                <span>{{ item.type }}</span>
-              </div>
-              <span class="pic-num-wrap">
-                <span class="pic-num">{{ item.count }}</span>
-              </span>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <h4 v-if="showNoDataDialog" class="no-product">没有任何产品</h4>
+      <el-table :data="productListData" style="width: 100%">
+        <el-table-column label="ID" prop="id" align="center" width="80">
+          <template slot-scope="{ row }">
+            <span>{{ row.id }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="产品" width="180">
+          <template slot-scope="scope">
+           <img
+      style="width: 80px; height: 30px"
+      :src="scope.row.url"/>
+          </template>
+        </el-table-column>
+        <el-table-column label="产品名称" min-width="100px">
+          <template slot-scope="{ row }">
+           <template v-if="row.edit">
+             <el-input v-model="row.title" class="edit-input" size="small" @blur="confirmEdit(row)" />
+             <!-- <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(row)">
+               cancel
+             </el-button> -->
+           </template>
+           <span v-else @click="row.edit = !row.edit">{{row.title}}</span>
+          </template>
+        </el-table-column>
+         <el-table-column label="内容" min-width="150px" prop="content" show-overflow-tooltip />>
+        <el-table-column label="所属类型" width="100px">
+          <template slot-scope="{ row }">
+            <span>{{
+              row.productTypeId | dealType
+            }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" width="180">
+          <template slot-scope="scope">
+            <i class="el-icon-time"></i>
+            <span style="margin-left: 10px">{{ $moment(scope.row.created_at).format('YYYY-MM-DD hh:mm:ss') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+              >删除</el-button
+            >
+            <!-- <el-button v-if="scope.row.edit" type="success" size="small" icon="el-icon-circle-check-outline" @click="confirmEdit(scope.row)">
+              OK
+            </el-button>
+            <el-button v-else type="primary" size="small" icon="el-icon-edit" @click="scope.row.edit=!scope.row.edit">
+              标题修改
+            </el-button> -->
+          </template>
+        </el-table-column>
+      </el-table>
+         <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getTotalAndProducts"
+    />
     </div>
     <el-dialog title="添加产品" :visible.sync="showAddDialogForm">
       <el-form
@@ -59,7 +118,7 @@
             class="upload-demo"
             :action="UploadUrl()"
             multiple
-            :limit="5"
+            :limit="1"
             :before-upload="beforeUpload"
             :on-exceed="handleExceed"
             :on-remove="handleRemove"
@@ -69,86 +128,124 @@
             list-type="picture"
           >
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
           </el-upload>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <markdown-editor
+            ref="markdownEditor"
+            v-model="uploadForm.content"
+            :options="{ hideModeSwitch: true, previewStyle: 'tab' }"
+            height="200px"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showAddDialogForm = false">取 消</el-button>
-        <el-button type="primary" @click="addProductsOp('uploadForm')">确 定</el-button>
+        <el-button type="primary" @click="addProductsOp('uploadForm')"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
-    <el-dialog
-      v-if="showBigImg"
-      title
-      :visible.sync="showBigImg"
-      width="740px"
-      top="100px"
-      :close-on-click-modal="true"
-      :show-close="false"
-      :lock-scroll="true"
-      class="lunbo_bg"
-    >
-      <div id="imgdia" class="bigimg_bg" tabindex="0">
-        <el-carousel
-          ref="lunboitem"
-          arrow="always"
-          class="lunbo"
-          height="435px"
-          indicator-position="none"
-          :autoplay="false"
-          :loop="false"
-        >
-          <el-carousel-item v-for="(item, index) in urlList" :key="index" :name="item.url">
-            <div :class="['carousel-img-style', showDeleteIcon?'showIcon':'hideIcon']">
-              <img
-                :src="item.url"
-                class="img_item"
-                @mouseover="showDeleteIcon = true"
-                @mouseout="hideDeleteIcon()"
-              >
-              <span
-                class="delete-icon"
-                @click="deletePic(item)"
-                @mouseover="showDeleteIcon = true"
-                @mouseout="hideDeleteIcon()"
-              >
-                <i class="el-icon-delete" />
-              </span>
+
+    <el-dialog title="编辑产品" :visible.sync="showEditDialogForm">
+      <el-form
+        ref="uploadForm"
+        :model="uploadForm"
+        :rules="rules"
+        label-width="100px"
+        class="upload-ruleForm"
+      >
+        <el-form-item label="产品类型" prop="type">
+          <el-select v-model="uploadForm.type" placeholder="请选择产品类型">
+            <el-option
+              v-for="item in productOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="文件上传" prop="uploadFiles">
+          <el-upload
+            class="upload-demo"
+            :action="UploadUrl()"
+            multiple
+            :limit="1"
+            :before-upload="beforeUpload"
+            :on-exceed="handleExceed"
+            :on-remove="handleRemove"
+            :on-success="handleFileSuccess"
+            :file-list="fileList"
+            :show-file-list="true"
+            list-type="picture"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
             </div>
-            <div class="img_name">{{ item.title }}</div>
-          </el-carousel-item>
-        </el-carousel>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <markdown-editor
+            ref="markdownEditor"
+            v-model="uploadForm.content"
+            :options="{ hideModeSwitch: true, previewStyle: 'tab' }"
+            height="200px"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showEditDialogForm = false">取 消</el-button>
+        <el-button type="primary" @click="updateProduct('uploadForm')"
+          >编辑</el-button
+        >
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchList, createProduct, deleteProduct } from '@/api/product'
+import {
+  fetchList,
+  createProduct,
+  findById,
+  updateProduct,
+  deleteProduct
+} from '@/api/product'
 import { interfaceUrl } from '@/utils/environment'
 import { getTotalTypeList } from '@/api/productType'
 import { mapGetters } from 'vuex'
+import MarkdownEditor from '@/components/MarkdownEditor'
+import Pagination from '@/components/Pagination'
+let that
 export default {
+  components: { MarkdownEditor, Pagination },
   data() {
     return {
-      showDeleteIcon: false, // 是否显示删除按钮
-      showNoDataDialog: false,
       uploadUrl: '',
-      inputValue: '',
       productOptions: [],
-      showBigImg: false,
+      typeObj: {}, // 用来处理产品类型
+      filterType: '',
       fileList: [],
-      productsInfo: [],
       urlList: [],
       downloadurl: '',
       showAddDialogForm: false,
+      showEditDialogForm: false,
       dialogVisible: false,
+      productListData: [],
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 10
+      },
       uploadForm: {
         type: '',
-        uploadFiles: []
+        uploadFiles: [],
+        content: ''
       },
-      formLabelWidth: '120px',
       rules: {
         uploadFiles: [
           {
@@ -163,51 +260,118 @@ export default {
             message: '请选择一个产品类型',
             trigger: 'change'
           }
+        ],
+        content: [
+          {
+            required: true,
+            message: '请输入对产品的描述',
+            trigger: 'blur'
+          }
         ]
       }
+    }
+  },
+  beforeCreate: function() {
+    that = this
+  },
+  filters: {
+    dealType: function(typeId) {
+      return that.typeObj[typeId]
     }
   },
   computed: {
     ...mapGetters(['username', 'userId'])
   },
-  watch: {
-    showbigimg(val) {
-      if (val === true) {
-        setTimeout(function() {
-          document.getElementById('imgdia').focus()
-        }, 30)
-      }
-    },
-    nowurl(val) {
-      if (val) {
-        const that = this
-        setTimeout(function() {
-          that.$refs.lunboitem.setActiveItem(val.url)
-        }, 30)
-      }
-    }
-  },
-  created: function() {
-    const that = this
-    document.onkeydown = function(e) {
-      const key = window.event.keyCode
-      if (that.showbigimg) {
-        if (key === 37) {
-          that.golastnew()
-        }
-        if (key === 39) {
-          that.gonextnew()
-        }
-      }
-    }
-  },
   mounted() {
     this.uploadUrl = interfaceUrl()
+    this.getProductTypes()
     this.getTotalAndProducts()
   },
   methods: {
-    hideDeleteIcon() {
-      this.showDeleteIcon = false
+    updateProduct(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          const params = {
+            id: this.uploadForm.id,
+            title: this.uploadForm.uploadFiles[0].value,
+            url: this.uploadForm.uploadFiles[0].name,
+            userId: this.userId,
+            content: this.uploadForm.content
+          }
+          updateProduct(params).then(res => {
+            if (res.code === 0) {
+              this.$refs[formName].resetFields()
+              this.showEditDialogForm = false
+              this.$message({
+                message: '产品修改成功',
+                type: 'success'
+              })
+              this.getTotalAndProducts()
+            }
+          })
+        }
+      })
+    },
+    handleFilter() {
+      this.getTotalAndProducts()
+    },
+    cancelEdit(row) {
+      row.title = row.originalTitle
+      row.edit = false
+      this.$message({
+        message: 'The title has been restored to the original value',
+        type: 'warning'
+      })
+    },
+    confirmEdit(row) {
+      row.edit = false
+      row.originalTitle = row.title
+      const params = {
+        id: row.id,
+        title: row.title,
+        url: row.url,
+        userId: row.userId,
+        content: row.content
+      }
+      updateProduct(params).then(res => {
+        if (res.code === 0) {
+          this.$message({
+            message: 'The title has been edited',
+            type: 'success'
+          })
+        }
+      })
+    },
+    handleEdit(row) {
+      this.editProduct(row)
+    },
+    editProduct(item) {
+      this.fileList = []
+      const params = {
+        id: item.id
+      }
+      findById(params).then(res => {
+        if (res.code === 0) {
+          const data = res.data
+          if (data) {
+            this.uploadForm.id = data.id
+            this.uploadForm.content = data.content
+            this.uploadForm.uploadFiles.push({
+              value: data.title,
+              name: data.url
+            })
+            this.uploadForm.type = data.productTypeId
+            this.fileList.push({
+              name: data.title,
+              url: data.url
+            })
+            this.showEditDialogForm = true
+          }
+        }
+      })
+    },
+    handleDelete(row) {
+      this.deletePic(row)
     },
     deletePic(item) {
       this.$confirm('确定要删除该产品吗, 是否继续?', '提示', {
@@ -227,7 +391,6 @@ export default {
                 type: 'success',
                 message: '删除成功'
               })
-              this.showBigImg = false
               this.getTotalAndProducts()
             } else {
               this.$message({
@@ -245,24 +408,23 @@ export default {
         })
     },
     getTotalAndProducts() {
-      fetchList().then(res => {
-        if (res.code === 0) {
-          this.productsInfo = this.dealProductsInfo(res.data)
+      const params = {
+        productTypeId: this.filterType ? this.filterType : -1,
+        page: this.listQuery.page,
+        limit: this.listQuery.limit
+      }
+      fetchList(params).then(res => {
+        const { code, data } = res
+        if (code === 0) {
+          this.productListData = data.products
+          this.productListData = data.products.map(v => {
+            this.$set(v, 'edit', false)
+            v.originalTitle = v.title
+            return v
+          })
+          this.total = data.count
         }
       })
-    },
-    dealProductsInfo(datas) {
-      if (datas && datas.length > 0) {
-        datas.forEach(data => {
-          const products = data.products
-          if (products && products.length > 0) {
-            data.firstUrl = products[0].url
-          } else {
-            data.firstUrl = ''
-          }
-        })
-        return datas
-      }
     },
     getProductTypes() {
       getTotalTypeList().then(res => {
@@ -270,9 +432,6 @@ export default {
           this.productOptions = this.formateRes(
             res.data && res.data.productTypes
           )
-          this.showNoDataDialog = false
-        } else {
-          this.showNoDataDialog = true
         }
       })
     },
@@ -283,6 +442,7 @@ export default {
           const optObj = {}
           optObj.label = arr.type
           optObj.value = arr.id
+          this.typeObj[arr.id] = arr.type
           dealRes.push(optObj)
         })
       }
@@ -296,29 +456,11 @@ export default {
         this.uploadForm.uploadFiles.push(fileInfo)
         this.$refs['uploadForm'].clearValidate()
       }
-      // this.saveFileToDataBase(file.name, fileInfo.name)
-    },
-    saveFileToDataBase(title, url) {
-      const params = {
-        productTypeId: this.uploadForm.type,
-        userId: this.userId,
-        url: url,
-        title: title
-      }
-      createProduct(params).then(res => {
-        if (res.code === 0) {
-          this.$message({
-            message: '产品添加成功',
-            type: 'success'
-          })
-        }
-      })
     },
     addProduct() {
       this.showAddDialogForm = true
       this.uploadForm.uploadFiles = []
       this.fileList = []
-      this.getProductTypes()
     },
     addProductsOp(formName) {
       this.$refs[formName].validate(valid => {
@@ -326,7 +468,8 @@ export default {
           const params = {
             productTypeId: this.uploadForm.type,
             files: this.uploadForm.uploadFiles,
-            userId: this.userId
+            userId: this.userId,
+            content: this.uploadForm.content
           }
           params.files = this.dealDiffEnvUrlPre(params.files)
           createProduct(params).then(res => {
@@ -348,15 +491,13 @@ export default {
         if (files && files.length > 0) {
           files.forEach(item => {
             const name = item.name
-            item.name = 'http://139.196.231.82:60001/upload/postImg/' + name.substring(name.lastIndexOf('/') + 1)
+            item.name =
+              'http://139.196.231.82:60001/upload/postImg/' +
+              name.substring(name.lastIndexOf('/') + 1)
           })
         }
       }
       return files
-    },
-    showBigImgFun(products) {
-      this.showBigImg = true
-      this.urlList = products
     },
     handleRemove(file, fileList) {
       if (file.status === 'success') {
@@ -402,7 +543,7 @@ export default {
       }
     },
     handleExceed(files, fileList) {
-      this.$message.error('当前限制最多选择5个文件')
+      this.$message.error('当前限制最多选择1个文件')
     },
     handleError(res) {
       if (res.status && res.status === 403) {
@@ -414,25 +555,6 @@ export default {
     },
     UploadUrl() {
       return this.uploadUrl + '/uploadImgsForPost'
-    },
-    handelcloseimg() {
-      this.$emit('closeimg')
-    },
-    golastnew() {
-      // this.$refs.lunboitem.prev()
-      if (this.nowimg === 0) {
-        alert('当前为第一张')
-      } else {
-        this.$refs.lunboitem.prev()
-      }
-    },
-    gonextnew() {
-      // this.$refs.lunboitem.next()
-      if (this.nowimg === this.urlList.length - 1) {
-        // utils.message('当前为最后一张', 'warning')
-      } else {
-        this.$refs.lunboitem.next()
-      }
     }
   }
 }
@@ -440,21 +562,6 @@ export default {
 
 <style lang="scss">
 .home {
-  .el-tag + .el-tag {
-    margin-left: 10px;
-  }
-  .button-new-tag {
-    margin-left: 10px;
-    height: 32px;
-    line-height: 30px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  .input-new-tag {
-    width: 90px;
-    margin-left: 10px;
-    vertical-align: bottom;
-  }
   .add-product {
     text-align: right;
     margin-right: 20px;
@@ -474,274 +581,10 @@ export default {
       }
     }
   }
-  .product-show {
-    padding: 20px;
-    padding-top: 0;
-    .no-product {
-      color: #333;
-    }
-    .image {
-      width: 100%;
-      height: 220px;
-      border: 1px solid #f0f0f0;
-    }
-    .image-info {
-      position: relative;
-      .sub-title {
-        font-size: 16px;
-        display: inline-block;
-        max-width: 100%;
-        _width: 100%;
-        white-space: nowrap;
-        word-wrap: normal;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-top: 16px;
-        margin-left: 10px;
-      }
-      .pic-num-wrap {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 50px;
-        text-align: right;
-        background-image: -webkit-linear-gradient(
-          top,
-          transparent,
-          rgba(26, 26, 26, 0.4)
-        );
-        background-image: -moz-linear-gradient(
-          top,
-          transparent,
-          rgba(26, 26, 26, 0.4)
-        );
-        background-image: -o-linear-gradient(
-          top,
-          transparent,
-          rgba(26, 26, 26, 0.4)
-        );
-        background-image: linear-gradient(
-          rgba(255, 255, 255, 0),
-          rgba(26, 26, 26, 0.4)
-        );
-        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FFFFFF',endColorstr='#661A1A1A',gradientType=0)";
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FFFFFF',endColorstr='#661A1A1A',gradientType=0);
-        .pic-num {
-          display: inline-block;
-          margin: 20px 5px 0 0;
-          font-size: 26px;
-          line-height: 1;
-          font-family: 'Gulim';
-          color: #fff;
-        }
-      }
-    }
-    .el-col {
-      margin-bottom: 20px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-  .bigimg_bgall {
-    width: 100%;
-    height: 100%;
-    z-index: 998;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  .bigimg_bg {
-    outline: none;
-  }
-  .icon_imgclose {
-    cursor: pointer;
-    font-size: 44px;
-    color: #9ba3af !important;
-    font-weight: 100;
-    position: fixed;
-    top: 12px;
-    right: 40px;
-    z-index: 99999;
-  }
-  .lunbo {
-    .carousel-img-style {
-      width: 580px;
-      height: 435px;
-      text-align: center;
-      margin-left: 80px;
-      margin-right: 80px;
-      position: relative;
-    }
-    .el-carousel__arrow {
-      background-color: rgba(0, 0, 0, 0);
-      .el-icon-arrow-left {
-        font-size: 50px;
-      }
-      .el-icon-arrow-right {
-        font-size: 50px;
-      }
-    }
-    .el-carousel__arrow--left {
-      position: absolute;
-      left: 0;
-      top: 50%;
-    }
-    .el-carousel__arrow--right {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-    }
-  }
-  .lunbo_bg {
-    .img_item {
-      width: 100%;
-      height: 100%;
-      border-radius: 5px;
-    }
-    .delete-icon {
-      position: absolute;
-      display: none;
-      z-index: 999999999;
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
-      right: 0;
-      bottom: 60px;
-      color: #111;
-    }
-    .showIcon {
-      .delete-icon {
-        display: inline-block;
-      }
-    }
-    .hideIcon {
-      .delete-icon {
-        display: none;
-      }
-    }
-    .img_beatch {
-      position: relative;
-      width: 240px;
-      height: 50px;
-      text-align: center;
-      margin: 10px auto;
-      background: #9ba3af;
-      z-index: 99999;
-      border-radius: 30px;
-      .titicon1 {
-        display: inline-block;
-        position: relative;
-        font-size: 24px;
-        margin-right: 44px;
-        line-height: 50px;
-        color: #354052 !important;
-        cursor: pointer;
-        &:hover {
-          .tit_name1 {
-            display: inline-block;
-          }
-        }
-      }
-      .titicon2 {
-        display: inline-block;
-        position: relative;
-        font-size: 24px;
-        margin-right: 44px;
-        line-height: 50px;
-        color: #354052 !important;
-        cursor: pointer;
-        &:hover {
-          .tit_name2 {
-            display: inline-block;
-          }
-        }
-      }
-      .titicon3 {
-        display: inline-block;
-        position: relative;
-        font-size: 24px;
-        line-height: 50px;
-        color: #354052 !important;
-        cursor: pointer;
-        &:hover {
-          .tit_name3 {
-            display: inline-block;
-          }
-        }
-      }
-      i {
-        &:hover {
-          color: #6f7e95 !important;
-        }
-      }
-      .titname_bg {
-        text-align: center;
-      }
-      a {
-        &:hover {
-          color: #6f7e95 !important;
-        }
-      }
-      .el-icon-arrow-left {
-        &:before {
-          color: #6f7e95;
-        }
-      }
-      .el-icon-arrow-right {
-        &:before {
-          color: #6f7e95;
-        }
-      }
-    }
-    .el-dialog {
-      background: rgba(0, 0, 0, 0);
-      box-shadow: none;
-    }
-    .el-dialog__body {
-      padding: 0;
-      border: none;
-      background-color: rgba(0, 0, 0, 0);
-      max-height: 900px !important;
-    }
-    .el-dialog__header {
-      background-color: rgba(0, 0, 0, 0) !important;
-    }
-  }
-  .img_name {
-    position: absolute;
-    bottom: 0;
-    left: 80px;
-    width: 580px;
-    height: 56px;
-    line-height: 56px;
-    font-size: 14px;
-    color: #354052;
-    padding-left: 25px;
-    text-align: left;
-    background: rgba(235, 241, 245, 0.8);
-    border-radius: 0 0 5px 5px;
-  }
-  .upload-demo {
-    display: inline;
-    .el-upload__tip {
-      display: inline;
-      margin-left: 10px;
-    }
-  }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: '';
-  }
-  .clearfix {
-    &:after {
-      clear: both;
-    }
+  .pagination-container {
+    text-align: right;
+    padding: 0;
+    padding-bottom: 20px;
   }
 }
 </style>

@@ -20,7 +20,8 @@
               <img
                 :src="item.url"
                 class="image"
-              />
+                @click="editEngineer(item)"
+              >
               <span
                 v-if="index === nowChooseImgIndex"
                 class="delete-icon"
@@ -61,8 +62,7 @@
           <el-upload
             class="upload-from"
             :action="UploadUrl()"
-            multiple
-            :limit="5"
+            :limit="1"
             :before-upload="beforeUpload"
             :on-exceed="handleExceed"
             :on-remove="handleRemove"
@@ -75,10 +75,57 @@
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <markdown-editor
+            ref="markdownEditor"
+            v-model="uploadForm.content"
+            :options="{ hideModeSwitch: true, previewStyle: 'tab' }"
+            height="200px"
+          />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showAddDialogForm = false">取 消</el-button>
         <el-button type="primary" @click="addEngineerCaseOp('uploadForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="编辑工程案例" :visible.sync="showEditDialogForm">
+      <el-form
+        ref="uploadForm"
+        :model="uploadForm"
+        :rules="rules"
+        label-width="100px"
+        class="upload-ruleForm"
+      >
+        <el-form-item label="文件上传" prop="uploadFiles">
+          <el-upload
+            class="upload-from"
+            :action="UploadUrl()"
+            :limit="1"
+            :before-upload="beforeUpload"
+            :on-exceed="handleExceed"
+            :on-remove="handleRemove"
+            :on-success="handleFileSuccess"
+            :file-list="fileList"
+            :show-file-list="true"
+            list-type="picture"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <markdown-editor
+            ref="markdownEditor"
+            v-model="uploadForm.content"
+            :options="{ hideModeSwitch: true, previewStyle: 'tab' }"
+            height="200px"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showEditDialogForm = false">取 消</el-button>
+        <el-button type="primary" @click="updateEngineerCase('uploadForm')">修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -88,13 +135,16 @@
 import {
   fetchList,
   createEngineerCase,
+  findById,
+  updateEngineerCase,
   deleteEngineerCase
 } from '@/api/engineerCase'
+import MarkdownEditor from '@/components/MarkdownEditor'
 import { interfaceUrl } from '@/utils/environment'
 import Pagination from '@/components/Pagination'
 import { mapGetters } from 'vuex'
 export default {
-  components: { Pagination },
+  components: { Pagination, MarkdownEditor },
   data() {
     return {
       nowChooseImgIndex: -1,
@@ -105,10 +155,12 @@ export default {
       fileList: [],
       engineerCaseInfo: [],
       showAddDialogForm: false,
+      showEditDialogForm: false,
       dialogVisible: false,
       uploadForm: {
-        type: '',
-        uploadFiles: []
+        id: '',
+        uploadFiles: [],
+        content: ''
       },
       page: 1,
       limit: 8,
@@ -120,6 +172,13 @@ export default {
             required: true,
             message: '请选择文件上传',
             trigger: 'change'
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: '请输入案例内容',
+            trigger: 'blur'
           }
         ]
       }
@@ -148,7 +207,6 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          debugger
           const params = {
             id: item.id,
             username: this.username
@@ -208,12 +266,62 @@ export default {
       this.uploadForm.uploadFiles = []
       this.fileList = []
     },
+    updateEngineerCase(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          const params = {
+            id: this.uploadForm.id,
+            title: this.uploadForm.uploadFiles[0].value,
+            url: this.uploadForm.uploadFiles[0].name,
+            userId: this.userId,
+            content: this.uploadForm.content
+          }
+          params.files = this.dealDiffEnvUrlPre(params.files)
+          updateEngineerCase(params).then(res => {
+            if (res.code === 0) {
+              this.$refs[formName].resetFields()
+              this.showEditDialogForm = false
+              this.$message({
+                message: '工程案例修改成功',
+                type: 'success'
+              })
+              this.getTotalAndEngineerCase()
+            }
+          })
+        }
+      })
+    },
+    editEngineer(item) {
+      this.fileList = []
+      const params = {
+        id: item.id
+      }
+      findById(params).then(res => {
+        if (res.code === 0) {
+          const data = res.data
+          if (data) {
+            this.uploadForm.id = data.id
+            this.uploadForm.content = data.content
+            this.uploadForm.uploadFiles.push({
+              value: data.title,
+              name: data.url
+            })
+            this.fileList.push({
+              name: data.title,
+              url: data.url
+            })
+            this.showEditDialogForm = true
+          }
+        }
+      })
+    },
     addEngineerCaseOp(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           const params = {
             files: this.uploadForm.uploadFiles,
-            userId: this.userId
+            userId: this.userId,
+            content: this.uploadForm.content
           }
           params.files = this.dealDiffEnvUrlPre(params.files)
           createEngineerCase(params).then(res => {
@@ -266,7 +374,7 @@ export default {
       return isAllowType && isLt1M && flag
     },
     handleExceed(files, fileList) {
-      this.$message.error('当前限制最多选择5个文件')
+      this.$message.error('当前限制最多选择1个文件')
     },
     handleError(res) {
       if (res.status && res.status === 403) {

@@ -18,7 +18,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
-
+import moment from 'moment'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -42,7 +42,7 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
-
+Vue.prototype.$moment = moment
 new Vue({
   el: '#app',
   router,
