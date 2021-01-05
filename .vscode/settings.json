@@ -4,7 +4,6 @@
             "files": [
                 "**/*",
             ],
-
             "exclude": [
                 "node_modules/**",
                 ".git/**",
@@ -18,12 +17,12 @@
         }],
         "targets": [{
             "type": "sftp",
-            "name": "AliyunServer",
-            "dir": "/root/source/Docker-web-auto",
-            "host": "139.196.231.82",
+            "name": "TxYunServer",
+            "dir": "/root/Docker-web-auto",
+            "host": "121.4.97.46",
             "port": 22,
             "user": "root",
-            "privateKey": "c:/Users/jianshe/.ssh/id_rsa"
+            "privateKey": "c:/Users/jianshe/.ssh/TxuRSA.pem"
         }],
     },
 }

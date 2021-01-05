@@ -5,6 +5,10 @@ import './styles/reset.scss'
 import './styles/resetElement.scss'
 import App from './App.vue'
 import router from './router'
+// import VConsole from 'vconsole';
+// let vconsole = new VConsole();
+// export default vconsole;
+
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
   if (to.meta.title) {

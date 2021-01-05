@@ -11,6 +11,7 @@ import NewDetail from './views/NewDetail'
 import Knowledge from './views/Knowledge'
 import KnowledgeInfo from './views/KnowledgeInfo'
 import Contract from './views/Contract'
+import Iframe from './views/Iframe'
 Vue.use(Router)
 
 export default new Router({
@@ -124,6 +125,14 @@ export default new Router({
       meta: {
         // 页面标题title
         title: '联系我们'
+      }
+    },
+    {
+      path: '/iframe',
+      name: 'iframe',
+      component: Iframe,
+      meta: {
+        title: '内嵌'
       }
     }
   ]

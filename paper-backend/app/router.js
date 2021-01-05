@@ -60,5 +60,4 @@ module.exports = app => {
   router.post("/api/news/update", "api.news.update");
   router.post("/api/news/updateViews","api.news.updateViews")
   router.get("/api/news/delete", "api.news.destroy");
-
 };

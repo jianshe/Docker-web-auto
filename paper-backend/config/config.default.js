@@ -17,25 +17,25 @@ module.exports = appInfo => {
   config.loginTokenTime = 7 * 24 * 60 * 60;
 
   // prod setting
-  // config.sequelize = {
-  //   dialect: "mysql",
-  //   host: "127.0.0.1",
-  //   port: 3306,
-  //   database: "paper",
-  //   username: "root",
-  //   password: "my-secret-pw",
-  //   timezone: "+8:00"
-  // };
-  // dev setting
   config.sequelize = {
     dialect: "mysql",
     host: "127.0.0.1",
     port: 3306,
-    database: "stuer",
+    database: "paper",
     username: "root",
-    password: "root",
+    password: "my-secret-pw",
     timezone: "+8:00"
   };
+  // dev setting
+  // config.sequelize = {
+  //   dialect: "mysql",
+  //   host: "127.0.0.1",
+  //   port: 3306,
+  //   database: "stuer",
+  //   username: "root",
+  //   password: "root",
+  //   timezone: "+8:00"
+  // };
 
   config.security = {
     csrf: false
@@ -70,20 +70,20 @@ module.exports = appInfo => {
     domain: "http://127.0.0.1"
   };
   // dev setting
-  config.urls = {
-    stuer_url: "http://127.0.0.1:7001"
-  };
-  // prod setting
   // config.urls = {
-  //   stuer_url: "http://127.0.0.1:60000"
+  //   stuer_url: "http://127.0.0.1:7001"
   // };
-  // config.cluster = {
-  //   listen: {
-  //     path: '',
-  //     port: 60001,
-  //     hostname: '0.0.0.0',
-  //   }
-  // };
+  // prod setting
+  config.urls = {
+    stuer_url: "http://127.0.0.1:443"
+  };
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 443,
+      hostname: '0.0.0.0',
+    }
+  };
   config.email = {
     options: {
       host: "smtp.qq.com",
