@@ -1,0 +1,53 @@
+version: '3.1'
+services:
+  mysql:
+    container_name: docker_tool_mysql
+    hostname: docker_tool_mysql
+    network_mode: "bridge"
+    environment:
+        MYSQL_ROOT_PASSWORD: "paper_root"
+    image: 'mysql:5.5'
+    restart: always
+    ports:
+        - "3306:3306"
+    volumes:
+      - ./mysql/conf.d/mysql.cnf:/etc/mysql/mysql.conf.d/mysql.cnf
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+        - ./redis.conf:/etc/redis/redis.conf:rw
+        - ./redis-data/:/data:rw
+    command:
+      # 执行的命令
+      redis-server /etc/redis/redis.conf --appendonly yes
+  nginx_website:
+    restart: always
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx_website/conf.d/:/etc/nginx/conf.d
+      - ./paper-website/dist:/var/www/html/
+  nginx_admin:
+    restart: always
+    image: nginx
+    ports:
+      - 3389:80
+    volumes:
+      - ./nginx_admin/conf.d/:/etc/nginx/conf.d
+      - ./paper-front/dist:/var/admin/html/
+  app-pm2:
+    container_name: app-pm2
+    #构建容器
+    build: ./paper-backend
+    #直接从git拉去
+    # build: git@github.com:su37josephxia/docker_ci.git#:backend
+    # 需要链接本地代码时
+    volumes:
+      - ./paper-backend:/usr/src/app
+    ports:
+      - "60002:60002"
