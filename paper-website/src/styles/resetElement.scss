@@ -1,0 +1,29 @@
+// 隐藏el-table th
+.el-table {
+  th {
+    display: none;
+  }
+  td {
+      padding:0;
+  }
+}
+.el-table--border {
+    border: none;
+}
+.el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+    border-right: none !important;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+    background-color: #fff;
+}
+.el-table__row {
+    .title {
+        text-align: center;
+    }
+}
+// 重置分布组件位置
+.el-pagination {
+    text-align: right;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
