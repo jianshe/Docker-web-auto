@@ -11,7 +11,7 @@ services:
     ports:
         - "3306:3306"
     volumes:
-      - ./mysql/conf.d/mysql.cnf:/etc/mysql/mysql.conf.d/mysql.cnf
+      - ./mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
   redis:
     image: redis:latest
     container_name: redis
@@ -40,14 +40,14 @@ services:
     volumes:
       - ./nginx_admin/conf.d/:/etc/nginx/conf.d
       - ./paper-front/dist:/var/admin/html/
-  app-pm2:
-    container_name: app-pm2
+  # app-pm2:
+  #   container_name: app-pm2
     #构建容器
-    build: ./paper-backend
+    # build: ./paper-backend
     #直接从git拉去
     # build: git@github.com:su37josephxia/docker_ci.git#:backend
     # 需要链接本地代码时
-    volumes:
-      - ./paper-backend:/usr/src/app
-    ports:
-      - "60002:60002"
+    # volumes:
+    #   - ./paper-backend:/usr/src/app
+    # ports:
+    #   - "60002:60002"

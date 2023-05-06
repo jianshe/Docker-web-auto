@@ -31,6 +31,7 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
+    host:"0.0.0.0",
     port: port,
     open: true,
     overlay: {
@@ -48,7 +49,7 @@ module.exports = {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:7001/api`,
+        target: `http://123.60.6.163:443/api`,
         // target: process.env.API_ADDRESS,
         changeOrigin: true,
         pathRewrite: {

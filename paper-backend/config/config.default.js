@@ -23,8 +23,8 @@ module.exports = appInfo => {
     port: 3306,
     database: "paper",
     username: "root",
-    password: "paper_root",
-    timezone: "+8:00"
+    password: "paper_root"
+    // timezone: "+8:00"
   };
   // dev setting
   // config.sequelize = {

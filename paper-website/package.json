@@ -22,8 +22,9 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.13.0",
-    "sass-loader": "^8.0.0",
+    "dart-sass": "^1.25.0",
+    "node-sass": "npm:dart-sass@^1.25.0",
+    "sass-loader": "^10.4.1",
     "swiper": "^5.2.1",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.41.2"
