@@ -2,8 +2,8 @@
   <div class="footer-con">
     <div class="f_wz">
       <div class="version">
-        <span>Copyright © All Rights Reserved&nbsp;河南鑫欣纸业有限责任公司</span>
-      </div>首页关键词：河南卫生纸,鑫欣纸业,河南卫生纸厂家,河南省息县化肥厂,河南卫生纸价格
+        <span>Copyright © All Rights Reserved&nbsp;公司名称</span>
+      </div>首页关键词：xxx,xxxxx,xxxxx,xxxx,xxxx
     </div>
   </div>
 </template>

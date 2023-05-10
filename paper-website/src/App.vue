@@ -2,9 +2,9 @@
   <div id="app">
     <div id="header-bg">
       <div id="head">
-        <p class="title">河南鑫欣纸业有限责任公司</p>
+        <p class="title">公司名称</p>
         <div class="tel">
-          <p>联系我们：0376-5891686</p>
+          <p>联系我们：xxxx-xxxxxxx</p>
         </div>
       </div>
     </div>
