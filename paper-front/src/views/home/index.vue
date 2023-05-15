@@ -17,16 +17,14 @@
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
-        >搜索</el-button
-      >
+      >搜索</el-button>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
         @click="addProduct"
-        >添加产品</el-button
-      >
+      >添加产品</el-button>
     </div>
     <div class="product-show">
       <el-table :data="productListData" style="width: 100%">
@@ -37,23 +35,24 @@
         </el-table-column>
         <el-table-column label="产品" width="180">
           <template slot-scope="scope">
-           <img
-      style="width: 80px; height: 30px"
-      :src="scope.row.url"/>
+            <img
+              style="width: 80px; height: 30px"
+              :src="scope.row.url"
+            >
           </template>
         </el-table-column>
         <el-table-column label="产品名称" min-width="100px">
           <template slot-scope="{ row }">
-           <template v-if="row.edit">
-             <el-input v-model="row.title" class="edit-input" size="small" @blur="confirmEdit(row)" />
-             <!-- <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(row)">
+            <template v-if="row.edit">
+              <el-input v-model="row.title" class="edit-input" size="small" @blur="confirmEdit(row)" />
+              <!-- <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(row)">
                cancel
              </el-button> -->
-           </template>
-           <span v-else @click="row.edit = !row.edit">{{row.title}}</span>
+            </template>
+            <span v-else @click="row.edit = !row.edit">{{ row.title }}</span>
           </template>
         </el-table-column>
-         <el-table-column label="内容" min-width="150px" prop="content" show-overflow-tooltip />>
+        <el-table-column label="内容" min-width="150px" prop="content" show-overflow-tooltip />>
         <el-table-column label="所属类型" width="100px">
           <template slot-scope="{ row }">
             <span>{{
@@ -63,21 +62,21 @@
         </el-table-column>
         <el-table-column label="创建时间" width="180">
           <template slot-scope="scope">
-            <i class="el-icon-time"></i>
+            <i class="el-icon-time" />
             <span style="margin-left: 10px">{{ $moment(scope.row.created_at).format('YYYY-MM-DD hh:mm:ss') }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)"
-              >编辑</el-button
-            >
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.row)"
+            >编辑</el-button>
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-              >删除</el-button
-            >
+            >删除</el-button>
             <!-- <el-button v-if="scope.row.edit" type="success" size="small" icon="el-icon-circle-check-outline" @click="confirmEdit(scope.row)">
               OK
             </el-button>
@@ -87,13 +86,13 @@
           </template>
         </el-table-column>
       </el-table>
-         <pagination
-      v-show="total > 0"
-      :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
-      @pagination="getTotalAndProducts"
-    />
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="listQuery.page"
+        :limit.sync="listQuery.limit"
+        @pagination="getTotalAndProducts"
+      />
     </div>
     <el-dialog title="添加产品" :visible.sync="showAddDialogForm">
       <el-form
@@ -144,9 +143,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showAddDialogForm = false">取 消</el-button>
-        <el-button type="primary" @click="addProductsOp('uploadForm')"
-          >确 定</el-button
-        >
+        <el-button
+          type="primary"
+          @click="addProductsOp('uploadForm')"
+        >确 定</el-button>
       </div>
     </el-dialog>
 
@@ -199,9 +199,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showEditDialogForm = false">取 消</el-button>
-        <el-button type="primary" @click="updateProduct('uploadForm')"
-          >编辑</el-button
-        >
+        <el-button
+          type="primary"
+          @click="updateProduct('uploadForm')"
+        >编辑</el-button>
       </div>
     </el-dialog>
   </div>
@@ -223,6 +224,11 @@ import Pagination from '@/components/Pagination'
 let that
 export default {
   components: { MarkdownEditor, Pagination },
+  filters: {
+    dealType: function(typeId) {
+      return that.typeObj[typeId]
+    }
+  },
   data() {
     return {
       uploadUrl: '',
@@ -273,11 +279,6 @@ export default {
   },
   beforeCreate: function() {
     that = this
-  },
-  filters: {
-    dealType: function(typeId) {
-      return that.typeObj[typeId]
-    }
   },
   computed: {
     ...mapGetters(['username', 'userId'])
@@ -492,7 +493,7 @@ export default {
           files.forEach(item => {
             const name = item.name
             item.name =
-              'http://139.196.231.82:60001/upload/postImg/' +
+              'http://123.60.6.163:443/upload/postImg/' +
               name.substring(name.lastIndexOf('/') + 1)
           })
         }

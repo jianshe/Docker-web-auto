@@ -30,7 +30,6 @@ class Users extends Controller {
     const pwdHash = ctx.helper.cryptPwd(password);
     console.log(pwdHash)
     const userInstance = await ctx.service.users.findOne(username);
-    console.log('xx', userInstance)
     if (!userInstance) {
       const { USER_NOT_FOUND } = this.config.errors;
       ctx.helper.$fail(USER_NOT_FOUND.code, USER_NOT_FOUND.msg);
