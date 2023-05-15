@@ -7,9 +7,9 @@
       </div>
       <div class="productBox">
         <div v-for="item in productList" :key="item.id">
-          <img :src="item.img" alt="" />
+          <img :src="item.url" alt="" />
           <p>
-            <span>{{ item.tit }}</span>
+            <span>{{ item.content }}</span>
           </p>
         </div>
       </div>
@@ -19,31 +19,17 @@
 </template>
 
 <script>
+import { getTotalTypeList } from "@/api/productType";
+import { getLatestProducts } from "@/api/product";
 export default {
   data() {
     return {
-      productList: [
-        {
-          id: "001",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38682.png",
-          tit: "服装搭配",
-        },
-        {
-          id: "002",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38683.png",
-          tit: "模特彩妆",
-        },
-        {
-          id: "003",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38682.png",
-          tit: "服装陈列",
-        },
-        {
-          id: "004",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38683.png",
-          tit: "视觉营销",
-        },
-      ],
+      productTypeList: [],
+      productList: [],
+      typeId: "",
+      page: 1,
+      limit: 4,
+      total: 0,
     };
   },
   methods: {
@@ -59,13 +45,45 @@ export default {
           this.total = data.count;
           const products = data.products;
           if (products && products.length > 0) {
-            this.products = products;
+            this.productList = products;
           } else {
-            this.products = [];
+            this.productList = [];
           }
         }
       });
     },
+    getProductTypeList() {
+      const params = {
+        page: 1,
+        limit: 6,
+      };
+      getTotalTypeList(params).then((res) => {
+        if (res.code === 0) {
+          const data = res.data;
+          const productTypes = data.productTypes;
+          if (productTypes.length > 0) {
+            this.productTypeList = productTypes;
+            this.typeId = productTypes[0].id + "";
+            this.getProductsList();
+          }
+        }
+      });
+    },
+    handleSelect(val) {
+      this.typeId = val + "";
+      this.getProductsList();
+    },
+    handleSizeChange(val) {
+      this.limit = val;
+      this.getProductsList();
+    },
+    handleCurrentChange(val) {
+      this.page = val;
+      this.getProductsList();
+    },
+  },
+  mounted() {
+    this.getProductTypeList();
   },
 };
 </script>

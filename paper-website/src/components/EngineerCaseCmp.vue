@@ -21,7 +21,7 @@
     <div class="engineer-page-con">
       <el-pagination
         :current-page="page"
-        :page-sizes="[6, 12, 18, 24]"
+        :page-sizes="[4,6, 12, 18, 24]"
         :page-size="100"
         :total="total"
         layout="total, sizes, prev, pager, next, jumper"

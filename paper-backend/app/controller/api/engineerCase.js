@@ -44,6 +44,7 @@ class EngineerCase extends Controller {
       },
       ctx.request.body
     );
+    console.log(ctx.request.body)
     const result = await ctx.service.engineerCase.create(ctx.request.body);
     ctx.helper.$success(result);
   }

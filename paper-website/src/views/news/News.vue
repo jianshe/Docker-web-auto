@@ -7,7 +7,7 @@
         <h3>NEWS</h3>
       </div>
       <div class="box" v-for="item in newsList" :key="item.id">
-        <a href="###"
+        <a href="javascript:;" @click="goDetail(item.id)"
           ><h3>{{ item.title }}</h3></a
         >
         <p>{{ item.content }}</p>

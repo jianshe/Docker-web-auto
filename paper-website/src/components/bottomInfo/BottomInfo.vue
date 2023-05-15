@@ -4,19 +4,15 @@
       <div class="footCont">
         <div class="ftItem" v-for="item in footInfoList" :key="item.id">
           <h6>
-            <a href="###">{{ item.title }}</a>
+            <a href="javascript:;" @click="goRoute(item.id)">{{
+              item.title
+            }}</a>
           </h6>
-          <ul>
-            <li v-for="subItem in item.subTitList" :key="subItem.subTitId">
+          <!-- <ul>
+            <li v-for="subItem in item.subTitList" :key="subItem.id" >
               <a href="###">{{ subItem.subTit }}</a>
             </li>
-          </ul>
-        </div>
-        <div class="ewm">
-          <img
-            src="https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38677.jpeg"
-            alt=""
-          />
+          </ul> -->
         </div>
       </div>
     </div>
@@ -26,7 +22,7 @@
         <i class="fa fa-map-marker"></i>
         <i class="fa fa-envelope"></i>
       </div>
-      <p>版权所有： ANS</p>
+      <p>版权所有： 某一公司名称</p>
     </div>
   </div>
 </template>
@@ -36,34 +32,30 @@ export default {
     return {
       footInfoList: [
         {
-          id: '001',
-          title: '关于我们',
-          // subTitList: [
-          //   { subTitId: '1', subTit: '穿衣培训' },
-          //   { subTitId: '2', subTit: '化妆培训' },
-          //   { subTitId: '3', subTit: '塑性培训' },
-          // ],
+          id: "001",
+          title: "关于我们",
         },
         {
-          id: '002',
-          title: '课程分类',
-          // subTitList: [
-          //   { subTitId: '1', subTit: '女模特' },
-          //   { subTitId: '2', subTit: '男模特' },
-          //   { subTitId: '3', subTit: '儿童模特' },
-          // ],
+          id: "002",
+          title: "工程安全",
         },
         {
-          id: '003',
-          title: '学员感言',
-          // subTitList: [
-          //   { subTitId: '1', subTit: '教师团队' },
-          //   { subTitId: '2', subTit: '新闻中心' },
-          //   { subTitId: '3', subTit: '联系我们' },
-          // ],
+          id: "003",
+          title: "新闻动态",
         },
       ],
     };
+  },
+  methods: {
+    goRoute(routeId) {
+      if (routeId === "001") {
+        this.$router.push({ path: "/about" });
+      } else if (routeId === "002") {
+        this.$router.push({ path: "/product" });
+      } else {
+        this.$router.push({ path: "/news" });
+      }
+    },
   },
 };
 </script>

@@ -61,7 +61,7 @@
             <el-pagination
               :total="total"
               :page-size="100"
-              :page-sizes="[6, 12, 18, 24]"
+              :page-sizes="[4,6, 12, 18, 24]"
               :current-page="page"
               layout="total, sizes, prev, pager, next, jumper"
               @size-change="handleSizeChange"

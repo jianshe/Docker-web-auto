@@ -7,25 +7,33 @@
         <h3>INDUSTRY KNOWLEDGE</h3>
       </div>
       <div class="box" v-for="item in knowledgeList" :key="item.id">
-        <a href="###"
+        <a href="javascript:;" @click="goDetail(item.id)"
           ><h3>{{ item.title }}</h3></a
         >
         <p>{{ item.content }}</p>
         <div class="bottom">
-          <span>{{ item.data }}</span>
-          <i class="fa fa-eye"> {{ item.pv }}</i>
+          <span>{{ item.showTime }}</span>
+          <i class="fa fa-eye"> {{ item.views }}</i>
         </div>
       </div>
-      <div class="page">
-        <a class="upPage" href="###">上一页</a>
-        <a href="">1</a>
-        <a class="nextPage" href="###">下一页</a>
+      <div class="knowledge-page-con">
+        <el-pagination
+          :current-page="page"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="100"
+          :total="total"
+          layout="total, sizes, prev, pager, next, jumper"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { fetchKnowledgeList, updateKnowledgeViews } from "@/api/knowledge";
+import { formatTimeToStr } from '@/utils/index.js'
 import SubNavBanner from "@/components/banner/SubNavBanner";
 import scrollRevealMixin from "@/mixin/scrollRevealMixin.js";
 export default {
@@ -33,50 +41,68 @@ export default {
   mixins: [scrollRevealMixin],
   data() {
     return {
-      knowledgeList: [
-        {
-          id: "001",
-          title: "分享T台模特个性妆容",
-          data: "2020-04-15",
-          pv: 30,
-          content:
-            "我们总喜欢在脸上添点艳丽明媚的喜庆颜色，借点好运势，图个好彩头!变化万千的彩妆盘其实蕴藏着巨大的能量，只要你加点细密心思，变换些许画法，就能够寄托对新的一年单纯、美好的愿望。掌握化妆心法，事业运、恋爱运、健康运和财运都会跟着强势起来!时尚总是徘徊在两个极端，这边T台上80年代浓眉正在流行，而另一边，浅到几乎令人无法察觉的淡色眉妆也渐渐走红起来。和蒙妮坦化妆学校一起来看看T台模特冬季演绎个性雷人妆吧。事实上，大部分中国女性都不能接受染淡自己的眉毛，因为我们的脸部线条不够立体，需要借助眉毛来加强脸部的轮廓。所以不妨折衷一下，将眉毛修剪整齐，然后把眉毛染摄影化妆培训得稍淡些。或是参照miu miu秀场，将眉毛染成眼影的色泽，和晕染开来的眼影融为一体，令整个眼妆更加完整。当然，如果你习惯不落于时尚之后，就把眉毛剃掉或者漂白，那会令你的表情看起来面无表情、高深莫测，酷极了！",
-        },
-        {
-          id: "002",
-          title: "当代风尚服装搭配师培训课程",
-          data: "2020-06-11",
-          pv: 31,
-          content:
-            "我们总喜欢在脸上添点艳丽明媚的喜庆颜色，借点好运势，图个好彩头!变化万千的彩妆盘其实蕴藏着巨大的能量，只要你加点细密心思，变换些许画法，就能够寄托对新的一年单纯、美好的愿望。掌握化妆心法，事业运、恋爱运、健康运和财运都会跟着强势起来!时尚总是徘徊在两个极端，这边T台上80年代浓眉正在流行，而另一边，浅到几乎令人无法察觉的淡色眉妆也渐渐走红起来。和蒙妮坦化妆学校一起来看看T台模特冬季演绎个性雷人妆吧。事实上，大部分中国女性都不能接受染淡自己的眉毛，因为我们的脸部线条不够立体，需要借助眉毛来加强脸部的轮廓。所以不妨折衷一下，将眉毛修剪整齐，然后把眉毛染摄影化妆培训得稍淡些。或是参照miu miu秀场，将眉毛染成眼影的色泽，和晕染开来的眼影融为一体，令整个眼妆更加完整。当然，如果你习惯不落于时尚之后，就把眉毛剃掉或者漂白，那会令你的表情看起来面无表情、高深莫测，酷极了！",
-        },
-        {
-          id: "003",
-          title: "分享T台模特个性妆容",
-          data: "2020-05-10",
-          pv: 34,
-          content:
-            "我们总喜欢在脸上添点艳丽明媚的喜庆颜色，借点好运势，图个好彩头!变化万千的彩妆盘其实蕴藏着巨大的能量，只要你加点细密心思，变换些许画法，就能够寄托对新的一年单纯、美好的愿望。掌握化妆心法，事业运、恋爱运、健康运和财运都会跟着强势起来!时尚总是徘徊在两个极端，这边T台上80年代浓眉正在流行，而另一边，浅到几乎令人无法察觉的淡色眉妆也渐渐走红起来。和蒙妮坦化妆学校一起来看看T台模特冬季演绎个性雷人妆吧。事实上，大部分中国女性都不能接受染淡自己的眉毛，因为我们的脸部线条不够立体，需要借助眉毛来加强脸部的轮廓。所以不妨折衷一下，将眉毛修剪整齐，然后把眉毛染摄影化妆培训得稍淡些。或是参照miu miu秀场，将眉毛染成眼影的色泽，和晕染开来的眼影融为一体，令整个眼妆更加完整。当然，如果你习惯不落于时尚之后，就把眉毛剃掉或者漂白，那会令你的表情看起来面无表情、高深莫测，酷极了！",
-        },
-        {
-          id: "004",
-          title: "服饰搭配培训怎么吸引？",
-          data: "2020-06-22",
-          pv: 33,
-          content:
-            "我们总喜欢在脸上添点艳丽明媚的喜庆颜色，借点好运势，图个好彩头!变化万千的彩妆盘其实蕴藏着巨大的能量，只要你加点细密心思，变换些许画法，就能够寄托对新的一年单纯、美好的愿望。掌握化妆心法，事业运、恋爱运、健康运和财运都会跟着强势起来!时尚总是徘徊在两个极端，这边T台上80年代浓眉正在流行，而另一边，浅到几乎令人无法察觉的淡色眉妆也渐渐走红起来。和蒙妮坦化妆学校一起来看看T台模特冬季演绎个性雷人妆吧。事实上，大部分中国女性都不能接受染淡自己的眉毛，因为我们的脸部线条不够立体，需要借助眉毛来加强脸部的轮廓。所以不妨折衷一下，将眉毛修剪整齐，然后把眉毛染摄影化妆培训得稍淡些。或是参照miu miu秀场，将眉毛染成眼影的色泽，和晕染开来的眼影融为一体，令整个眼妆更加完整。当然，如果你习惯不落于时尚之后，就把眉毛剃掉或者漂白，那会令你的表情看起来面无表情、高深莫测，酷极了！",
-        },
-        {
-          id: "005",
-          title: "分享T台模特个性妆容",
-          data: "2020-06-30",
-          pv: 99,
-          content:
-            "我们总喜欢在脸上添点艳丽明媚的喜庆颜色，借点好运势，图个好彩头!变化万千的彩妆盘其实蕴藏着巨大的能量，只要你加点细密心思，变换些许画法，就能够寄托对新的一年单纯、美好的愿望。掌握化妆心法，事业运、恋爱运、健康运和财运都会跟着强势起来!时尚总是徘徊在两个极端，这边T台上80年代浓眉正在流行，而另一边，浅到几乎令人无法察觉的淡色眉妆也渐渐走红起来。和蒙妮坦化妆学校一起来看看T台模特冬季演绎个性雷人妆吧。事实上，大部分中国女性都不能接受染淡自己的眉毛，因为我们的脸部线条不够立体，需要借助眉毛来加强脸部的轮廓。所以不妨折衷一下，将眉毛修剪整齐，然后把眉毛染摄影化妆培训得稍淡些。或是参照miu miu秀场，将眉毛染成眼影的色泽，和晕染开来的眼影融为一体，令整个眼妆更加完整。当然，如果你习惯不落于时尚之后，就把眉毛剃掉或者漂白，那会令你的表情看起来面无表情、高深莫测，酷极了！",
-        },
-      ],
+      page: 1,
+      limit: 10,
+      total: 0,
+      views: 0,
+      knowledgeId: -1,
+      knowledgeList: [],
+      isNoData: false,
     };
   },
+  mounted() {
+    this.fetchKnowledgeList();
+  },
+  methods: {
+    goDetail(id) {
+      this.knowledgeId = id;
+      this.updateKnowledgeViews();
+      this.$router.push({ path: "/knowledges/" + id });
+    },
+    updateKnowledgeViews() {
+      const params = {
+        id: this.knowledgeId,
+      };
+      updateKnowledgeViews(params).then((res) => {
+        if (res.code === 0) {
+          this.views++;
+        }
+      });
+    },
+    fetchKnowledgeList() {
+      const params = {
+        page: this.page,
+        limit: this.limit,
+      };
+      fetchKnowledgeList(params).then((res) => {
+        if (res.code === 0) {
+          const data = res.data;
+          this.total = res.data.count;
+          const knowledges = data.knowledges;
+          if (knowledges && knowledges.length > 0) {
+            this.isNoData = false;
+            this.knowledgeList = this.formateKnowledge(knowledges);
+          } else {
+            this.isNoData = true;
+          }
+        }
+      });
+    },
+    formateKnowledge(knowledge) {
+      knowledge.forEach((item) => {
+        item.showTime = formatTimeToStr(item.updatedAt, "yyyy-MM-dd hh:mm:ss");
+      });
+      return knowledge;
+    },
+    handleSizeChange(val) {
+      this.limit = val;
+      this.fetchKnowledgeList();
+    },
+    handleCurrentChange(val) {
+      this.page = val;
+      this.fetchKnowledgeList();
+    },
+  }
 };
 </script>
 

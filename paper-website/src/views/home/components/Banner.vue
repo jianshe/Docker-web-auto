@@ -1,7 +1,7 @@
 <template>
   <div class="homeBanner">
-    <h1>Fashion models</h1>
-    <h6>SPEAL FOR FASHION</h6>
+    <h1>Famous Products</h1>
+    <h6>SPEAL FOR PAPER</h6>
   </div>
 </template>
 

@@ -8,44 +8,56 @@
 
       <div class="engineerBox">
         <div v-for="item in engineerCaseList" :key="item.id">
-          <img :src="item.img" alt="" />
+          <img :src="item.url" alt="" />
           <p>
-            <span>{{ item.tit }}</span>
+            <span>{{ item.content }}</span>
           </p>
         </div>
       </div>
-      <router-link to="/course"><div class="moreBtn">MORE</div></router-link>
+      <router-link to="/engineerCase"><div class="moreBtn">MORE</div></router-link>
     </section>
   </div>
 </template>
 
 <script>
+import { fetchList } from "@/api/engineerCase";
 export default {
   data() {
     return {
-      engineerCaseList: [
-        {
-          id: "001",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38682.png",
-          tit: "服装搭配",
-        },
-        {
-          id: "002",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38683.png",
-          tit: "模特彩妆",
-        },
-        {
-          id: "003",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38682.png",
-          tit: "服装陈列",
-        },
-        {
-          id: "004",
-          img: "https://ntemimg.wezhan.cn/contents/sitefiles2038/10193466/images/-38683.png",
-          tit: "视觉营销",
-        },
-      ],
+      page: 1,
+      limit: 4,
+      total: 0,
+      engineerCaseList: [],
     };
+  },
+  mounted() {
+    this.getEngineerCaseList();
+  },
+  methods: {
+    getEngineerCaseList() {
+      const params = {
+        page: this.page,
+        limit: this.limit,
+      };
+      fetchList(params).then((res) => {
+        if (res.code === 0) {
+          const data = res.data;
+          this.total = res.data.count;
+          const engineerCase = data.engineerCase;
+          if (engineerCase && engineerCase.length > 0) {
+            this.engineerCaseList = engineerCase;
+          }
+        }
+      });
+    },
+    handleSizeChange(val) {
+      this.limit = val;
+      this.getEngineerCaseList();
+    },
+    handleCurrentChange(val) {
+      this.page = val;
+      this.getEngineerCaseList();
+    },
   },
 };
 </script>

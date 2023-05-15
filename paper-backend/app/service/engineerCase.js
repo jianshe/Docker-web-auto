@@ -26,11 +26,13 @@ class EngineerCase extends Service {
     const count = await this.getEngineerCaseCount(); // 获取工程案例总数
     return { count, engineerCase };
   }
-  async create({ userId, files}) {
+  async create({ userId, files,content}) {
     const { ctx } = this;
     const engineerCaseModel = {
-      userId: userId
+      userId: userId,
+      content: content
     };
+    console.log('content',content)
     if (files && files.length > 0) {
       const fileSavePromise = files.map(async (file) => {
         engineerCaseModel.title = file.value;

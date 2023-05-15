@@ -4,29 +4,29 @@
     <div class="pubCon">
       <div class="contactCon">
         <div class="lfInfo">
-          <h1>艾尼斯美妆培训连锁</h1>
-          <h2>AINISI BEAUTY MAKE UP CHAIN</h2>
+          <h1>xxxx</h1>
+          <h2>xxx - xxxx</h2>
           <div class="line"></div>
           <p>
             <a href="###"
-              ><i class="fa fa-institution fa-lg"></i><span>艾尼斯</span></a
+              ><i class="fa fa-institution fa-lg"></i><span>xxxx</span></a
             >
           </p>
           <p>
             <a href="###"
               ><i class="fa fa-map-marker"></i
-              ><span>苏州市相城区春申湖西路903号</span></a
+              ><span>xxx</span></a
             >
           </p>
           <p>
-            <a href="tel:4009699180"
-              ><i class="fa fa-phone"></i><span>400-9699-180</span></a
+            <a href="tel:xxx"
+              ><i class="fa fa-phone"></i><span>xx-xx-xx</span></a
             >
           </p>
           <p>
             <a href="###"
               ><i class="fa fa-envelope"></i
-              ><span>honggaoyang@anspxhj999.onexmail.com</span></a
+              ><span>xxx@xxxx.xx.com</span></a
             >
           </p>
         </div>

@@ -390,7 +390,7 @@ export default {
           files.forEach(item => {
             const name = item.name
             item.name =
-              'http://139.196.231.82:60001/upload/postImg/' +
+              'http://172.29.170.216:9527/upload/postImg/' +
               name.substring(name.lastIndexOf('/') + 1)
           })
         }
