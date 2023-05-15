@@ -35,16 +35,18 @@
         </el-table-column>
         <el-table-column label="产品" width="180">
           <template slot-scope="scope">
-            <img
-              style="width: 80px; height: 30px"
-              :src="scope.row.url"
-            >
+            <img style="width: 80px; height: 30px" :src="scope.row.url">
           </template>
         </el-table-column>
         <el-table-column label="产品名称" min-width="100px">
           <template slot-scope="{ row }">
             <template v-if="row.edit">
-              <el-input v-model="row.title" class="edit-input" size="small" @blur="confirmEdit(row)" />
+              <el-input
+                v-model="row.title"
+                class="edit-input"
+                size="small"
+                @blur="confirmEdit(row)"
+              />
               <!-- <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(row)">
                cancel
              </el-button> -->
@@ -52,18 +54,23 @@
             <span v-else @click="row.edit = !row.edit">{{ row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="内容" min-width="150px" prop="content" show-overflow-tooltip />>
+        <el-table-column
+          label="内容"
+          min-width="150px"
+          prop="content"
+          show-overflow-tooltip
+        />>
         <el-table-column label="所属类型" width="100px">
           <template slot-scope="{ row }">
-            <span>{{
-              row.productTypeId | dealType
-            }}</span>
+            <span>{{ row.productTypeId | dealType }}</span>
           </template>
         </el-table-column>
         <el-table-column label="创建时间" width="180">
           <template slot-scope="scope">
             <i class="el-icon-time" />
-            <span style="margin-left: 10px">{{ $moment(scope.row.created_at).format('YYYY-MM-DD hh:mm:ss') }}</span>
+            <span style="margin-left: 10px">{{
+              $moment(scope.row.created_at).format("YYYY-MM-DD hh:mm:ss")
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -492,9 +499,7 @@ export default {
         if (files && files.length > 0) {
           files.forEach(item => {
             const name = item.name
-            item.name =
-              'http://172.29.170.216:9527/upload/postImg/' +
-              name.substring(name.lastIndexOf('/') + 1)
+            item.name = name.substring(name.lastIndexOf('/') + 1)
           })
         }
       }

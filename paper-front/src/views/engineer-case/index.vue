@@ -14,14 +14,18 @@
     </div>
     <div class="engineer-case-show">
       <el-row :gutter="20">
-        <el-col v-for="(item, index) in engineerCaseInfo" :key="index" :span="6">
+        <el-col
+          v-for="(item, index) in engineerCaseInfo"
+          :key="index"
+          :span="6"
+        >
           <el-card>
-            <div :class="[showDeleteIcon?'showIcon':'hideIcon','image-info']" @mouseover="showDeleteIconOp(index)" @mouseout="showDeleteIcon=false">
-              <img
-                :src="item.url"
-                class="image"
-                @click="editEngineer(item)"
-              >
+            <div
+              :class="[showDeleteIcon ? 'showIcon' : 'hideIcon', 'image-info']"
+              @mouseover="showDeleteIconOp(index)"
+              @mouseout="showDeleteIcon = false"
+            >
+              <img :src="item.url" class="image" @click="editEngineer(item)">
               <span
                 v-if="index === nowChooseImgIndex"
                 class="delete-icon"
@@ -72,7 +76,9 @@
             list-type="picture"
           >
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
           </el-upload>
         </el-form-item>
         <el-form-item label="内容" prop="content">
@@ -86,7 +92,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showAddDialogForm = false">取 消</el-button>
-        <el-button type="primary" @click="addEngineerCaseOp('uploadForm')">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="addEngineerCaseOp('uploadForm')"
+        >确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="编辑工程案例" :visible.sync="showEditDialogForm">
@@ -111,7 +120,9 @@
             list-type="picture"
           >
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
           </el-upload>
         </el-form-item>
         <el-form-item label="内容" prop="content">
@@ -125,7 +136,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showEditDialogForm = false">取 消</el-button>
-        <el-button type="primary" @click="updateEngineerCase('uploadForm')">修改</el-button>
+        <el-button
+          type="primary"
+          @click="updateEngineerCase('uploadForm')"
+        >修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -389,9 +403,7 @@ export default {
         if (files && files.length > 0) {
           files.forEach(item => {
             const name = item.name
-            item.name =
-              'http://172.29.170.216:9527/upload/postImg/' +
-              name.substring(name.lastIndexOf('/') + 1)
+            item.name = name.substring(name.lastIndexOf('/') + 1)
           })
         }
       }
@@ -530,7 +542,7 @@ export default {
   .clearfix:before,
   .clearfix:after {
     display: table;
-    content: '';
+    content: "";
   }
   .clearfix {
     &:after {
