@@ -36,7 +36,7 @@ services:
     restart: always
     image: nginx
     ports:
-      - 3389:80
+      - 9528:80
     volumes:
       - ./nginx_admin/conf.d/:/etc/nginx/conf.d
       - ./paper-front/dist:/var/admin/html/

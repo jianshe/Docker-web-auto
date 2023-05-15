@@ -1,0 +1,64 @@
+
+> stuer-server@1.0.0 dev
+> egg-bin dev
+
+2023-05-15 18:56:06,596 INFO 252556 [master] node version v18.8.0
+2023-05-15 18:56:06,596 INFO 252556 [master] egg version 2.37.0
+Mon, 15 May 2023 10:56:07 GMT sequelize deprecated String based operators are now deprecated. Please use Symbol based operators for better security, read more at http://docs.sequelizejs.com/manual/tutorial/querying.html#operators at node_modules/sequelize/lib/sequelize.js:245:13
+2023-05-15 18:56:07,681 INFO 252563 [egg-sequelize](4ms) Executed (default): SELECT 1+1 AS result
+2023-05-15 18:56:07,683 INFO 252563 [egg-sequelize](1ms) Executed (default): CREATE TABLE IF NOT EXISTS `product_types` (`id` INTEGER auto_increment , `type` VARCHAR(255), `desc` TEXT, `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,683 INFO 252563 [egg-sequelize](5ms) Executed (default): CREATE TABLE IF NOT EXISTS `engineerCases` (`id` INTEGER auto_increment , `userId` INTEGER, `title` VARCHAR(255), `content` TEXT, `url` TEXT, `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, `created_at` DATETIME NOT NULL, `updated_at` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,683 INFO 252563 [egg-sequelize](4ms) Executed (default): CREATE TABLE IF NOT EXISTS `knowledge` (`id` INTEGER auto_increment , `userId` INTEGER, `title` VARCHAR(30), `content` TEXT, `views` INTEGER DEFAULT 0, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,683 INFO 252563 [egg-sequelize](4ms) Executed (default): CREATE TABLE IF NOT EXISTS `news` (`id` INTEGER auto_increment , `userId` INTEGER, `title` VARCHAR(30), `content` TEXT, `views` INTEGER DEFAULT 0, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,686 INFO 252563 [egg-sequelize](1ms) Executed (default): CREATE TABLE IF NOT EXISTS `products` (`id` INTEGER auto_increment , `productTypeId` INTEGER, `userId` INTEGER, `title` VARCHAR(255), `content` TEXT, `url` TEXT, `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, `created_at` DATETIME NOT NULL, `updated_at` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,686 INFO 252563 [egg-sequelize](1ms) Executed (default): CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER auto_increment , `role` VARCHAR(255), `username` VARCHAR(255), `password` VARCHAR(255), PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,691 INFO 252556 [master] agent_worker#1:252563 started (1093ms)
+2023-05-15 18:56:07,708 INFO 252563 [egg-sequelize](31ms) Executed (default): CREATE TABLE IF NOT EXISTS `companies` (`id` INTEGER auto_increment , `name` VARCHAR(30), `info` VARCHAR(255), `regNum` VARCHAR(255), `address` VARCHAR(255), `property` VARCHAR(255), `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,708 INFO 252563 [egg-sequelize](23ms) Executed (default): CREATE TABLE IF NOT EXISTS `user_infos` (`id` INTEGER , `role` INTEGER, `username` VARCHAR(255), `nickName` VARCHAR(255), `avatar` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:07,715 INFO 252563 [egg-sequelize](26ms) Executed (default): SHOW INDEX FROM `knowledge`
+2023-05-15 18:56:07,716 INFO 252563 [egg-sequelize](27ms) Executed (default): SHOW INDEX FROM `engineerCases`
+2023-05-15 18:56:07,716 INFO 252563 [egg-sequelize](28ms) Executed (default): SHOW INDEX FROM `product_types`
+2023-05-15 18:56:07,721 INFO 252563 [egg-sequelize](3ms) Executed (default): SHOW INDEX FROM `news`
+2023-05-15 18:56:07,722 INFO 252563 [egg-sequelize](2ms) Executed (default): SHOW INDEX FROM `products`
+2023-05-15 18:56:07,722 INFO 252563 [egg-sequelize](1ms) Executed (default): SHOW INDEX FROM `users`
+2023-05-15 18:56:07,729 INFO 252563 [egg-sequelize](5ms) Executed (default): SHOW INDEX FROM `companies`
+2023-05-15 18:56:07,729 INFO 252563 [egg-sequelize](0ms) Executed (default): SHOW INDEX FROM `user_infos`
+Mon, 15 May 2023 10:56:08 GMT sequelize deprecated String based operators are now deprecated. Please use Symbol based operators for better security, read more at http://docs.sequelizejs.com/manual/tutorial/querying.html#operators at node_modules/sequelize/lib/sequelize.js:245:13
+2023-05-15 18:56:08,836 WARN 252580 [egg-security] Please use `config.security.csrf = { enable: false }` instead of `config.security.csrf = false`
+2023-05-15 18:56:08,934 INFO 252580 [egg-sequelize](1ms) Executed (default): SELECT 1+1 AS result
+2023-05-15 18:56:08,936 INFO 252580 [egg-sequelize](1ms) Executed (default): CREATE TABLE IF NOT EXISTS `companies` (`id` INTEGER auto_increment , `name` VARCHAR(30), `info` VARCHAR(255), `regNum` VARCHAR(255), `address` VARCHAR(255), `property` VARCHAR(255), `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:08,937 INFO 252580 [egg-sequelize](0ms) Executed (default): CREATE TABLE IF NOT EXISTS `engineerCases` (`id` INTEGER auto_increment , `userId` INTEGER, `title` VARCHAR(255), `content` TEXT, `url` TEXT, `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, `created_at` DATETIME NOT NULL, `updated_at` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:08,940 INFO 252580 [egg-sequelize](1ms) Executed (default): CREATE TABLE IF NOT EXISTS `knowledge` (`id` INTEGER auto_increment , `userId` INTEGER, `title` VARCHAR(30), `content` TEXT, `views` INTEGER DEFAULT 0, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:08,960 INFO 252580 [egg-sequelize](2ms) Executed (default): CREATE TABLE IF NOT EXISTS `news` (`id` INTEGER auto_increment , `userId` INTEGER, `title` VARCHAR(30), `content` TEXT, `views` INTEGER DEFAULT 0, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2023-05-15 18:56:08,964 ERROR 252580 [app_worker] server got error: bind EADDRINUSE 0.0.0.0:443, code: EADDRINUSE
+2023-05-15 18:56:08,965 INFO 252580 [egg-sequelize](0ms) Executed (default): CREATE TABLE IF NOT EXISTS `product_types` (`id` INTEGER auto_increment , `type` VARCHAR(255), `desc` TEXT, `createdAt` DATETIME, `updatedAt` DATETIME, `deletedAt` DATETIME, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+[2023-05-15 18:56:08.980] [cfork:master:252556] worker:252580 disconnect (exitedAfterDisconnect: false, state: disconnected, isDead: false, worker.disableRefork: true)
+[2023-05-15 18:56:08.981] [cfork:master:252556] don't fork, because worker:252580 will be kill soon
+2023-05-15 18:56:08,981 INFO 252556 [master] app_worker#1:252580 disconnect, suicide: false, state: disconnected, current workers: ["1"]
+[2023-05-15 18:56:08.981] [cfork:master:252556] worker:252580 exit (code: 0, exitedAfterDisconnect: false, state: dead, isDead: true, isExpected: false, worker.disableRefork: true)
+2023-05-15 18:56:08,982 ERROR 252556 nodejs.AppWorkerDiedError: [master] app_worker#1:252580 died (code: 0, signal: null, suicide: false, state: dead), current workers: []
+    at Master.onAppExit (/home/Docker-web-auto/paper-backend/node_modules/egg-cluster/lib/master.js:511:21)
+    at Master.emit (node:events:513:28)
+    at Messenger.sendToMaster (/home/Docker-web-auto/paper-backend/node_modules/egg-cluster/lib/utils/messenger.js:137:17)
+    at Messenger.send (/home/Docker-web-auto/paper-backend/node_modules/egg-cluster/lib/utils/messenger.js:102:12)
+    at EventEmitter.<anonymous> (/home/Docker-web-auto/paper-backend/node_modules/egg-cluster/lib/master.js:354:22)
+    at EventEmitter.emit (node:events:525:35)
+    at ChildProcess.<anonymous> (node:internal/cluster/primary:203:13)
+    at Object.onceWrapper (node:events:628:26)
+    at ChildProcess.emit (node:events:513:28)
+    at ChildProcess._handle.onexit (node:internal/child_process:291:12)
+name: "AppWorkerDiedError"
+pid: 252556
+hostname: hecs-201844
+
+2023-05-15 18:56:08,983 ERROR 252556 [master] app_worker#1:252580 start fail, exiting with code:1
+2023-05-15 18:56:08,984 ERROR 252556 [master] exit with code:1
+2023-05-15 18:56:08,991 ERROR 252563 [agent_worker] receive disconnect event on child_process fork mode, exiting with code:110
+2023-05-15 18:56:08,993 ERROR 252563 [agent_worker] exit with code:110
+Error: /home/Docker-web-auto/paper-backend/node_modules/egg-bin/lib/start-cluster {"tscompiler":"/home/Docker-web-auto/paper-backend/node_modules/ts-node/register/index.js","eggTsHelper":"/home/Docker-web-auto/paper-backend/node_modules/egg-ts-helper/register.js","workers":1,"baseDir":"/home/Docker-web-auto/paper-backend","framework":"/home/Docker-web-auto/paper-backend/node_modules/egg"} exit with code 1
+    at ChildProcess.<anonymous> (/home/Docker-web-auto/paper-backend/node_modules/common-bin/lib/helper.js:56:21)
+    at Object.onceWrapper (node:events:628:26)
+    at ChildProcess.emit (node:events:513:28)
+    at ChildProcess._handle.onexit (node:internal/child_process:291:12) {
+  code: 1
+}
