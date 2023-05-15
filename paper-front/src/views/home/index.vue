@@ -499,7 +499,9 @@ export default {
         if (files && files.length > 0) {
           files.forEach(item => {
             const name = item.name
-            item.name = name.substring(name.lastIndexOf('/') + 1)
+            item.name =
+              'http://123.60.6.163:443/upload/postImg/' +
+              name.substring(name.lastIndexOf('/') + 1)
           })
         }
       }
