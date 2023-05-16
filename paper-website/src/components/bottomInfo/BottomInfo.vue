@@ -22,7 +22,7 @@
         <i class="fa fa-map-marker"></i>
         <i class="fa fa-envelope"></i>
       </div>
-      <p>版权所有： 某一公司名称</p>
+      <p>版权所有： 公司名称</p>
     </div>
   </div>
 </template>

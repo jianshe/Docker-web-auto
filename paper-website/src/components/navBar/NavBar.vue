@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="navBar" :class="{ open: isOpenMenu }">
-      <div class="nav_logo"><router-link to="/">某一公司名称</router-link></div>
+      <div class="nav_logo"><router-link to="/">公司名称</router-link></div>
       <div class="nav_menu">
         <router-link
           v-for="item in navMenuList"

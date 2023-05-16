@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '鑫欣纸业后管平台',
+      title: '后管平台',
       logo: true
     }
   }
