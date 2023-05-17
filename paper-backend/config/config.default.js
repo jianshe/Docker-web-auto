@@ -26,16 +26,6 @@ module.exports = appInfo => {
     password: "paper_root"
     // timezone: "+8:00"
   };
-  // dev setting
-  // config.sequelize = {
-  //   dialect: "mysql",
-  //   host: "127.0.0.1",
-  //   port: 3306,
-  //   database: "stuer",
-  //   username: "root",
-  //   password: "root",
-  //   timezone: "+8:00"
-  // };
 
   config.security = {
     csrf: false
@@ -49,7 +39,7 @@ module.exports = appInfo => {
   };
 
   // 用来摘要密码的秘钥
-  config.pwdSecrect = "thisisapwdsecrect";
+  config.pwdSecrect = "";
 
   config.redis = {
     client: {
@@ -59,31 +49,32 @@ module.exports = appInfo => {
       db: 0
     }
   };
-  config.cluster = {
-    listen: {
-      path: '',
-      port: 60000,
-      hostname: 'http://127.0.0.1',
-    }
-  };
+
   config.sso = {
     domain: "http://127.0.0.1"
   };
   // dev setting
-  // config.urls = {
-  //   stuer_url: "http://127.0.0.1:7001"
-  // };
-  // prod setting
   config.urls = {
-    stuer_url: "http://127.0.0.1:443"
+    stuer_url: "http://127.0.0.1:8001"
   };
   config.cluster = {
     listen: {
       path: '',
-      port: 443,
+      port: 8001,
       hostname: '0.0.0.0',
     }
   };
+  // prod setting
+  // config.urls = {
+  //   stuer_url: "http://127.0.0.1:443"
+  // };
+  // config.cluster = {
+  //   listen: {
+  //     path: '',
+  //     port: 443,
+  //     hostname: '0.0.0.0',
+  //   }
+  // };
   config.email = {
     options: {
       host: "smtp.qq.com",
