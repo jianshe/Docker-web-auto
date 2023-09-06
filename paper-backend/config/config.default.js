@@ -54,27 +54,27 @@ module.exports = appInfo => {
     domain: "http://127.0.0.1"
   };
   // dev setting
-  config.urls = {
-    stuer_url: "http://127.0.0.1:8001"
-  };
-  config.cluster = {
-    listen: {
-      path: '',
-      port: 8001,
-      hostname: '0.0.0.0',
-    }
-  };
-  // prod setting
   // config.urls = {
-  //   stuer_url: "http://127.0.0.1:443"
+  //   stuer_url: "http://127.0.0.1:8001"
   // };
   // config.cluster = {
   //   listen: {
   //     path: '',
-  //     port: 443,
+  //     port: 8001,
   //     hostname: '0.0.0.0',
   //   }
   // };
+  // prod setting
+  config.urls = {
+    stuer_url: "http://127.0.0.1:443"
+  };
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 443,
+      hostname: '0.0.0.0',
+    }
+  };
   config.email = {
     options: {
       host: "smtp.qq.com",
